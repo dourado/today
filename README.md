@@ -1,4 +1,4 @@
-# Daily
+# Today
 
 This is a simple web application that displays a daily message and plays an audio file.
 
