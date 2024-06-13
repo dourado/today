@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Fetch the message from the API
-    fetch('https://shouldideploy.today/api?tz=Brazil/East')
+    fetch('https://shouldideploy.today/api?tz=America/Sao_Paulo')
         .then(response => response.json())
         .then(data => {
             const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
