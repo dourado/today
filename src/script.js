@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const messageElement = document.getElementById('message');
-    const playButton = document.getElementById('playButton');
 
     const audioFiles = {
         0: 'audio/sunday.mp3',
@@ -18,10 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (audioSrc) {
         audioPlayer.src = audioSrc;
-        audioPlayer.load(); // Load the audio
+        audioPlayer.load();
         audioPlayer.play().catch(error => {
             console.error('Autoplay error:', error);
-            playButton.style.display = 'block'; // Show play button if autoplay fails
         });
     } else {
         audioPlayer.innerHTML = "Nenhum áudio disponível para hoje.";
@@ -40,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error fetching the API:', error);
         });
 
-    playButton.addEventListener('click', function() {
+    // Adiciona evento de interação para garantir a reprodução do áudio
+    document.addEventListener('click', function() {
+        audioPlayer.muted = false;
         audioPlayer.play().catch(error => {
             console.error('Play button error:', error);
         });
