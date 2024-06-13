@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const messageElement = document.getElementById('message');
     const container = document.getElementById('container');
+    const dayOfWeekElement = document.getElementById('dayOfWeek');
+
+    const daysOfWeek = [
+        'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+    ];
 
     const audioFiles = {
         0: 'audio/sunday.mp3',
@@ -25,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         audioPlayer.innerHTML = "Nenhum áudio disponível para hoje.";
     }
+
+    // Update the <h1> with the day of the week
+    dayOfWeekElement.textContent = daysOfWeek[today];
 
     // Fetch the message from the API
     fetch('https://shouldideploy.today/api?tz=America/Sao_Paulo')
