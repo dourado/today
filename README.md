@@ -16,4 +16,4 @@ This is a simple web application that displays a daily message and plays an audi
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)npm
+[MIT](https://choosealicense.com/licenses/mit/)
