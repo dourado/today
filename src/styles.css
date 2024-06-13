@@ -4,7 +4,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
     margin: 0;
 }
 
@@ -19,4 +18,15 @@ body {
 audio {
     width: 100%;
     margin-top: 20px;
+}
+
+/* Background styles for different states */
+.background-yes {
+    background: url('yes-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.background-no {
+    background: url('no-background.jpg') no-repeat center center fixed;
+    background-size: cover;
 }

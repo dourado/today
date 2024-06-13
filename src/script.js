@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const messageElement = document.getElementById('message');
+    const container = document.getElementById('container');
+    const playButton = document.getElementById('playButton');
 
     const audioFiles = {
         0: 'audio/sunday.mp3',
@@ -32,13 +34,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
             const message = data.message;
             messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>${shouldDeploy}</b><br>"${message}"`;
+
+            // Change background based on shouldideploy value
+            if (data.shouldideploy) {
+                document.body.classList.add('background-yes');
+            } else {
+                document.body.classList.add('background-no');
+            }
         })
         .catch(error => {
             messageElement.textContent = "Não foi possível carregar a mensagem.";
             console.error('Error fetching the API:', error);
         });
 
-    // Adiciona evento de interação para garantir a reprodução do áudio
     document.addEventListener('click', function() {
         audioPlayer.muted = false;
         audioPlayer.play().catch(error => {
