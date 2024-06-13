@@ -31,9 +31,9 @@ audio {
 }
 
 .container-yes {
-    background-color: lightgreen;
+    background-color: green;
 }
 
 .container-no {
-    background-color: lightcoral;
+    background-color: red;
 }
