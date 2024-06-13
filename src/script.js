@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const messageElement = document.getElementById('message');
     const container = document.getElementById('container');
+    const daySelector = document.getElementById('daySelector');
 
     const audioFiles = {
         0: 'audio/sunday.mp3',
@@ -13,40 +14,53 @@ document.addEventListener('DOMContentLoaded', function() {
         6: 'audio/saturday.mp3'
     };
 
-    const today = new Date().getDay();
-    const audioSrc = audioFiles[today];
+    function updateContent(day) {
+        const audioSrc = audioFiles[day];
+        
+        if (audioSrc) {
+            audioPlayer.src = audioSrc;
+            audioPlayer.load();
+            audioPlayer.play().catch(error => {
+                console.error('Autoplay error:', error);
+            });
+        } else {
+            audioPlayer.innerHTML = "Nenhum áudio disponível para hoje.";
+        }
 
-    if (audioSrc) {
-        audioPlayer.src = audioSrc;
-        audioPlayer.load();
-        audioPlayer.play().catch(error => {
-            console.error('Autoplay error:', error);
-        });
-    } else {
-        audioPlayer.innerHTML = "Nenhum áudio disponível para hoje.";
+        fetch('https://shouldideploy.today/api?tz=Brazil/DeNoronha')
+            .then(response => response.json())
+            .then(data => {
+                const shouldDeploy = data.shouldideploy ? 'yes' : 'no';
+                const message = data.message;
+                messageElement.innerHTML = `shouldideploytoday? <b>${shouldDeploy}</b>,<br>"${message}"`;
+
+                // Change background color based on shouldideploy value
+                if (data.shouldideploy) {
+                    document.body.classList.add('background-yes');
+                    document.body.classList.remove('background-no');
+                    container.classList.add('container-yes');
+                    container.classList.remove('container-no');
+                } else {
+                    document.body.classList.add('background-no');
+                    document.body.classList.remove('background-yes');
+                    container.classList.add('container-no');
+                    container.classList.remove('container-yes');
+                }
+            })
+            .catch(error => {
+                messageElement.textContent = "Não foi possível carregar a mensagem.";
+                console.error('Error fetching the API:', error);
+            });
     }
 
-    // Fetch the message from the API
-    fetch('https://shouldideploy.today/api?tz=Brazil/East')
-        .then(response => response.json())
-        .then(data => {
-            const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
-            const message = data.message;
-            messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>${shouldDeploy}</b><br>"${message}"`;
+    daySelector.addEventListener('change', function() {
+        updateContent(daySelector.value);
+    });
 
-            // Change background color based on shouldideploy value
-            if (data.shouldideploy) {
-                document.body.classList.add('background-yes');
-                container.classList.add('container-yes');
-            } else {
-                document.body.classList.add('background-no');
-                container.classList.add('container-no');
-            }
-        })
-        .catch(error => {
-            messageElement.textContent = "Não foi possível carregar a mensagem.";
-            console.error('Error fetching the API:', error);
-        });
+    // Initialize with the current day
+    const today = new Date().getDay();
+    daySelector.value = today;
+    updateContent(today);
 
     document.addEventListener('click', function() {
         audioPlayer.muted = false;
