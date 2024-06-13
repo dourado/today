@@ -12,7 +12,7 @@ This is a simple web application that displays a daily message and plays an audi
 
 ## How to Run
 
-1. Open `src/index.html` in your web browser.
+[Golden Today](https://golden-today.vercel.app/).
 
 ## License
 
