@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const messageElement = document.getElementById('message');
     const container = document.getElementById('container');
-    const playButton = document.getElementById('playButton');
 
     const audioFiles = {
         0: 'audio/sunday.mp3',
@@ -35,11 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = data.message;
             messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>${shouldDeploy}</b><br>"${message}"`;
 
-            // Change background based on shouldideploy value
+            // Change background color based on shouldideploy value
             if (data.shouldideploy) {
                 document.body.classList.add('background-yes');
+                container.classList.add('container-yes');
             } else {
                 document.body.classList.add('background-no');
+                container.classList.add('container-no');
             }
         })
         .catch(error => {
