@@ -10,11 +10,20 @@
 </head>
 <body>
     <div class="container" id="container">
-        <h1 id="dayOfWeek">Today</h1>
-        <p id="message">Loading message...</p>
-        <audio controls id="audioPlayer" autoplay>
-            Seu navegador não suporta o elemento de áudio.
-        </audio>
+        <div class="window-header">
+            <div class="buttons">
+                <span class="close"></span>
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+            </div>
+        </div>
+        <div class="window-content">
+            <h1 id="dayOfWeek">Today</h1>
+            <p id="message">Loading message...</p>
+            <audio id="audioPlayer" controls autoplay>
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
     </div>
     <script src="script.js"></script>
     <script>

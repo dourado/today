@@ -12,10 +12,13 @@ body {
 
 .container {
     text-align: center;
-    margin: 0 auto;
-    width: auto;
+    width: 50%;
+    margin: 20px auto;
+    border: 1px solid #ccc;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -25,23 +28,86 @@ body {
     }
 }
 
+.window-header {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: #282a36;
+    /* border-bottom: 1px solid #6272a4; */
+    border-radius: 5px 5px 0 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.buttons span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close {
+    background-color: #ff605c;
+}
+
+.minimize {
+    background-color: #ffbd44;
+}
+
+.maximize {
+    background-color: #00ca4e;
+}
+
+window-content {
+    padding: 20px;
+    background-color: #44475a;
+}
+
 audio {
     width: 100%;
     margin-top: 20px;
+    height: 40px;
+    border-radius: 0 0 5px 5px;
+    /* background-color: #44475a; */
+    appearance: none;
+    color: #44475a;
+    border: none;
+    box-shadow: none;
 }
 
+/* @media (prefers-color-scheme: dark) {
+    audio {
+        background-color: #44475a;
+    }
+} */
+
 .background-yes {
-    background-color: green;
+    background-color: #50fa7b;
+    /* Green da paleta Dracula */
 }
 
 .background-no {
-    background-color: red;
+    background-color: #ff5555;
+    /* Red da paleta Dracula */
 }
 
 .container-yes {
-    background-color: green;
+    background-color: #50fa7b;
+    /* Green da paleta Dracula */
 }
 
 .container-no {
-    background-color: red;
+    background-color: #ff5555;
+    /* Red da paleta Dracula */
+}
+
+a {
+    color: #8be9fd;
+}
+
+a:hover {
+    color: #50fa7b;
 }
