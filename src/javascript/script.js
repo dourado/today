@@ -10,7 +10,8 @@ const wrapper = document.querySelector(".wrapper"),
     musicList = wrapper.querySelector(".music-list"),
     showMoreButton = wrapper.querySelector("#more-music"),
     hideMusicButton = musicList.querySelector("#close"),
-    repeatButton = wrapper.querySelector("#repeat-plist")
+    repeatButton = wrapper.querySelector("#repeat-plist"),
+    ulTag = wrapper.querySelector("ul");
     
 // Carrega música aleatória na atualização da página
 const today = new Date().getDay();
@@ -23,6 +24,7 @@ window.addEventListener("load", () => {
     repeatButton.innerText = "repeat_one"; // Define o texto inicial do botão como "repeat_one"
     repeatButton.classList.add("material-icons"); // Adiciona a classe do ícone
     repeatButton.setAttribute("title", "Song Looped"); // Define o título inicial
+    highlightNextMusic();
 });
 
 // Função que realiza o carregamento da Música
@@ -48,11 +50,6 @@ function loadMusic(indexNumb) {
         });
 }
 
-// Função para determinar a próxima música com base no dia da semana
-function getNextMusicIndex() {
-    const nextIndex = (musicIndex + 1) % 7; // Calcula o próximo dia da semana
-    return nextIndex;
-}
 
 // Função Play
 function playMusic() {
@@ -70,13 +67,11 @@ function pauseMusic() {
 
 // Função Next (Próximo)
 function nextMusic() {
-    // Incrementa +1 no index da música
-    musicIndex++;
-    // Se musicIndex for maior do que o comprimento do total de músicas, então a musicIndex voltará para a primeira música
-    musicIndex >= allMusic.length ? musicIndex = 0 : musicIndex = musicIndex;
+    musicIndex = (musicIndex + 1) % allMusic.length;
     loadMusic(musicIndex);
     playMusic();
     playingNow();
+    highlightNextMusic(); // Destaque a próxima música após avançar para a próxima música
 }
 
 // Arrow Function (Funções de seta que permitem escrever uma sintaxe de função mais curta)
@@ -174,47 +169,53 @@ hideMusicButton.addEventListener("click", () => {
 
 // Função para destacar a próxima música na lista
 function highlightNextMusic() {
-    musicIndex++;
-    const nextMusicIndex = musicIndex >= allMusic.length ? 0 : musicIndex;
+    const nextMusicIndex = (musicIndex + 1) % allMusic.length;
+    // const nextDayElement = document.querySelector('.title-music');
+    // nextDayElement.textContent = allMusic[nextMusicIndex].name; // Atualize o nome da próxima música
+
     const allLiTags = ulTag.querySelectorAll("li");
     allLiTags.forEach(li => li.classList.remove("highlight-next"));
-    const nextLi = ulTag.querySelector(`li[data-li-index="${nextMusicIndex}"]`);
+    const nextLi = ulTag.querySelector(`li[li-index="${nextMusicIndex + 1}"]`); // Ajusta para selecionar o próximo li corretamente
     if (nextLi) {
         nextLi.classList.add("highlight-next");
     }
 }
 
-const ulTag = wrapper.querySelector("ul");
+
+// Remove the duplicate declaration of 'ulTag'
 
 // Cria <li> de acordo com o comprimento do array (Exibindo a Lista de Música)
-for (let i = 0; i < allMusic.length; i++) {
-    // Passando o nome da música e artista do array para a li
-    let liTag = `<li li-index="${i + 1}">
-                    <div class="row">
-                        <span>${allMusic[i].name}</span>
-                        <p>${allMusic[i].artist}</p>
-                    </div>
-                    <audio class="${allMusic[i].src}" src="music/${allMusic[i].src}.mp3"></audio>
-                    <span id="${allMusic[i].src}" class="audio-duration">3:40</span>
-                </li>`;
-    ulTag.insertAdjacentHTML("beforeend", liTag);
-
-    let liAudioDuration = ulTag.querySelector(`#${allMusic[i].src}`);
-    let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
-
-    liAudioTag.addEventListener("loadeddata", () => {
-        let audioDuration = liAudioTag.duration;
-        let totalMinutes = Math.floor(audioDuration / 60);
-        let totalSeconds = Math.floor(audioDuration % 60);
-        if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
-            totalSeconds = `0${totalSeconds}`;
-        }
-
-        liAudioDuration.innerText = `${totalMinutes}:${totalSeconds}`;
-        // Adiciona o atributo t-duration
-        liAudioDuration.setAttribute("t-duration", `${totalMinutes}:${totalSeconds}`);
-    });
+if (today == 6) {
+    nextMusicTomorrow = 0;
+} else {
+    nextMusicTomorrow = today + 1;
 }
+// Passando o nome da música e artista do array para a li
+let liTag = `<li li-index="${nextMusicTomorrow}">
+                <div class="row">
+                    <span>${allMusic[nextMusicTomorrow].name}</span>
+                    <p>${allMusic[nextMusicTomorrow].artist}</p>
+                </div>
+                <audio class="${allMusic[nextMusicTomorrow].src}" src="audio/${allMusic[nextMusicTomorrow].src}.mp3"></audio>
+                <span id="${allMusic[nextMusicTomorrow].src}" class="audio-duration">1:37</span>
+            </li>`;
+ulTag.insertAdjacentHTML("beforeend", liTag);
+
+let liAudioDuration = ulTag.querySelector(`#${allMusic[nextMusicTomorrow].src}`);
+let liAudioTag = ulTag.querySelector(`.${allMusic[nextMusicTomorrow].src}`);
+
+liAudioTag.addEventListener("loadeddata", () => {
+    let audioDuration = liAudioTag.duration;
+    let totalMinutes = Math.floor(audioDuration / 60);
+    let totalSeconds = Math.floor(audioDuration % 60);
+    if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
+        totalSeconds = `0${totalSeconds}`;
+    }
+
+    liAudioDuration.innerText = `${totalMinutes}:${totalSeconds}`;
+    // Adiciona o atributo t-duration
+    liAudioDuration.setAttribute("t-duration", `${totalMinutes}:${totalSeconds}`);
+});
 
 // Trocando música específica 
 const allLiTags = ulTag.querySelectorAll("li");
@@ -230,7 +231,7 @@ function playingNow() {
         }
 
         // Se houver uma tag li cujo índice li é igual a musicIndex, então estilizá-la com a classe playing
-        if (allLiTags[j].getAttribute("li-index") == musicIndex) {
+        if (allLiTags[j].getAttribute("li-index") == musicIndex + 1) {
             allLiTags[j].classList.add("playing");
             audioTag.innerText = "Today";
         }
@@ -238,6 +239,8 @@ function playingNow() {
         // Adiciona o atributo "onclick" em todas as li tags
         allLiTags[j].setAttribute("onclick", "clicked(this)");
     }
+
+    highlightNextMusic(); // Atualiza a próxima música
 }
 
 // Tocando música na tag li
@@ -257,13 +260,3 @@ const darkMode = document.querySelector('.dark-mode'),
 darkMode.onclick = () => {
     body.classList.toggle('is-dark');
 }
-
-// CSS Adicional para destacar a próxima música
-const style = document.createElement('style');
-style.innerHTML = `
-    .highlight-next {
-        background-color: #ff74a4;
-        color: white;
-    }
-`;
-document.head.appendChild(style);
