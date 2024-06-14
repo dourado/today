@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Change background color based on shouldideploy value
             if (data.shouldideploy) {
                 document.body.classList.add('background-yes');
-                container.classList.add('container-yes');
+                img-area.classList.add('img-area-yes');
             } else {
                 document.body.classList.add('background-no');
-                container.classList.add('container-no');
+                img-area.classList.add('img-area-no');
             }
         })
         .catch(error => {

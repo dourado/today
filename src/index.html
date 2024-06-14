@@ -3,29 +3,67 @@
 <head>
     <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" href="img/coffee.png" type="image/x-icon">
     <title>Golden Today</title>
 </head>
-<body>
-    <div class="container" id="container">
-        <div class="window-header">
-            <div class="buttons">
-                <span class="close"></span>
-                <span class="minimize"></span>
-                <span class="maximize"></span>
+<body class="page">
+    <div class="wrapper">
+        <div class="top-bar">
+            <i class="material-icons">arrow_drop_down</i>
+            <span>Today</span>
+            <div class="dark-mode">
+                <i class='bx bx-moon'></i>
+                <i class='bx bxs-moon'></i>
             </div>
         </div>
-        <div class="window-content">
-            <h1 id="dayOfWeek">Today</h1>
-            <p id="message">Loading message...</p>
-            <audio id="audioPlayer" controls autoplay>
-                Seu navegador não suporta o elemento de áudio.
-            </audio>
+        <div class="img-area">
+            <div class="text-area">
+                <p id="message"></p>
+            </div>
+        </div>        
+        <div class="song-details">
+            <p class="name"></p>
+            <p class="artist"></p>
+        </div>
+        <div class="progress-area">
+            <div class="progress-bar"></div>
+            <div class="timer">
+                <span class="current">0:00</span>
+                <span class="duration"></span>
+            </div>
+            <audio id="main-audio" src=""></audio>
+        </div>
+        <div class="controls">
+            <i id="repeat-plist" class="material-icons" title="Playlist Loop">repeat</i>
+            <i id="prev" class='bx bx-skip-previous'></i>
+            <div class="play-pause">
+                <i class='bx bx-play'></i>
+            </div>
+            <i id="next" class='bx bx-skip-next'></i>
+            <i id="more-music" class='bx bxs-playlist'></i>
+        </div>
+        <div class="music-list">
+            <div class="header">
+                <div class="row">
+                    <i id="more-music" class='bx bxs-playlist'></i>
+                    <span class="title-music">Tomorrow</span>
+                </div>
+                <i id="close" class='bx bx-x'></i>
+            </div>
+            <ul>
+                
+            </ul>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- JavaScript -->
+    <script src="javascript/music-list.js"></script>
+    <script src="javascript/script.js"></script>
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
