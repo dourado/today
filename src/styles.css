@@ -349,9 +349,6 @@ ul li.playing {
 .is-dark .bxs-moon {
     opacity: 1;
     visibility: visible;
-}
-
-.is-dark .bxs-moon {
     color: var(--white-mode);
 }
 
