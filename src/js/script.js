@@ -11,7 +11,22 @@ const wrapper = document.querySelector(".wrapper"),
     showMoreButton = wrapper.querySelector("#more-music"),
     hideMusicButton = musicList.querySelector("#close"),
     ulTag = wrapper.querySelector("ul"),
-    allLiTags = ulTag.querySelectorAll("li");
+    allLiTags = ulTag.querySelectorAll("li"),
+    dropdownToggle = document.querySelector("#dropdown-toggle"),
+    dropdownContent = document.querySelector(".dropdown-content");
+
+// Função para exibir e ocultar o conteúdo suspenso
+dropdownToggle.addEventListener("click", (event) => {
+    event.stopPropagation(); // Impede que o clique no ícone feche o menu suspenso
+    dropdownContent.classList.toggle("show-dropdown");
+});
+
+// Função para fechar a barra suspensa se clicar fora dela
+document.addEventListener("click", (event) => {
+    if (!dropdownToggle.contains(event.target) && !dropdownContent.contains(event.target)) {
+        dropdownContent.classList.remove("show-dropdown");
+    }
+});
 
 // Carrega música aleatória na atualização da página
 const today = new Date().getDay();

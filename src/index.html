@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -12,11 +11,18 @@
     <link rel="icon" href="img/coffee.png" type="image/x-icon">
     <title>Golden Today</title>
 </head>
-
 <body class="page">
     <div class="wrapper">
         <div class="top-bar">
-            <i class="material-icons">arrow_drop_down</i>
+            <div class="dropdown">
+                <div class="row">
+                    <i class="material-icons" id="dropdown-toggle">arrow_drop_down</i>
+                </div>
+                <div class="dropdown-content">
+                    <a href="https://github.com/lucascdourado" target="_blank">GitHub</a>
+                    <a href="https://www.linkedin.com/in/lucascdourado/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
             <span>Today</span>
             <div class="dark-mode">
                 <i class='bx bx-moon'></i>
@@ -58,11 +64,10 @@
                 <i id="close" class='bx bx-x'></i>
             </div>
             <ul>
-
+                <!-- Lista de músicas -->
             </ul>
         </div>
     </div>
-
     <script src="js/music-list.js"></script>
     <script src="js/script.js"></script>
     <script>
@@ -70,5 +75,4 @@
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 </body>
-
 </html>
