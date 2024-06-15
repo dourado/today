@@ -57,13 +57,15 @@ function loadMusic(indexNumb) {
 
             // Change background color based on shouldideploy value
             if (data.shouldideploy) {
-                document.querySelector('.img-area').style.backgroundColor = '#4CAF50'; // Green for YES
+                document.querySelector('.img-area').style.backgroundColor = '#50fa7b'; // Green for YES
+                document.querySelector('.text-area').style.color = '#515c6f'; // Green for YES
+                document.querySelector('body').style.backgroundColor = '#50fa7b'; // Green for YES
             } else {
-                document.querySelector('.img-area').style.backgroundColor = '#F44336'; // Red for NO
+                document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Red for NO
+                document.querySelector('body').style.backgroundColor = '#ff5555'; // Red for NO
             }
         });
 }
-
 
 // Função Play
 function playMusic() {
