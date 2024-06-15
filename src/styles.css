@@ -456,6 +456,8 @@ ul li.playing {
         width: 100%;
         height: 100vh;
         padding: 20px;
+        padding-bottom: 50px;
+        padding-top: 50px;
         box-shadow: none;
         border-radius: 0;
     }
@@ -476,6 +478,8 @@ ul li.playing {
         width: 100%;
         height: 100vh;
         padding: 20px;
+        padding-bottom: 50px;
+        padding-top: 50px;
         box-shadow: none;
         border-radius: 0;
     }
@@ -496,6 +500,8 @@ ul li.playing {
         width: 100%;
         height: 100vh;
         padding: 20px;
+        padding-bottom: 50px;
+        padding-top: 50px;
         box-shadow: none;
         border-radius: 0;
     }
@@ -517,6 +523,8 @@ ul li.playing {
         width: 100%;
         height: 100vh;
         padding: 20px;
+        padding-bottom: 40px;
+        padding-top: 40px;
         box-shadow: none;
         border-radius: 0;
     }
