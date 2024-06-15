@@ -1,18 +1,18 @@
 // Seleciona todas as tags ou elementos necessários
 const wrapper = document.querySelector(".wrapper"),
-musicImage = wrapper.querySelector(".img-area img"),
-musicName = wrapper.querySelector(".song-details .name"),
-musicArtist = wrapper.querySelector(".song-details .artist"),
-mainAudio = wrapper.querySelector("#main-audio"),
-playPauseButton = wrapper.querySelector(".play-pause"),
-progressArea = wrapper.querySelector(".progress-area"),
-progressBar = wrapper.querySelector(".progress-bar"),
-musicList = wrapper.querySelector(".music-list"),
-showMoreButton = wrapper.querySelector("#more-music"),
-hideMusicButton = musicList.querySelector("#close"),
-ulTag = wrapper.querySelector("ul"),
-allLiTags = ulTag.querySelectorAll("li");
-    
+    musicImage = wrapper.querySelector(".img-area img"),
+    musicName = wrapper.querySelector(".song-details .name"),
+    musicArtist = wrapper.querySelector(".song-details .artist"),
+    mainAudio = wrapper.querySelector("#main-audio"),
+    playPauseButton = wrapper.querySelector(".play-pause"),
+    progressArea = wrapper.querySelector(".progress-area"),
+    progressBar = wrapper.querySelector(".progress-bar"),
+    musicList = wrapper.querySelector(".music-list"),
+    showMoreButton = wrapper.querySelector("#more-music"),
+    hideMusicButton = musicList.querySelector("#close"),
+    ulTag = wrapper.querySelector("ul"),
+    allLiTags = ulTag.querySelectorAll("li");
+
 // Carrega música aleatória na atualização da página
 const today = new Date().getDay();
 let musicIndex = today;
@@ -132,10 +132,10 @@ progressArea.addEventListener("click", (e) => {
 
 // Botão de Repetir e Aleatório
 const repeatButton = wrapper.querySelector("#repeat-plist");
-repeatButton.addEventListener("click", ()=> {
+repeatButton.addEventListener("click", () => {
     let getText = repeatButton.innerText; // Obtém innerText do ícone
 
-    switch(getText) { 
+    switch (getText) {
         case "repeat": // Caso o ícone seja repeat, mudar para repeat_one
             repeatButton.innerText = "repeat_one";
             repeatButton.setAttribute("title", "Song Looped");
@@ -152,10 +152,10 @@ repeatButton.addEventListener("click", ()=> {
 });
 
 // Repetindo a música
-mainAudio.addEventListener("ended", ()=> {
+mainAudio.addEventListener("ended", () => {
     let getText = repeatButton.innerText; // Obtém innerText do ícone
 
-    switch(getText) { 
+    switch (getText) {
         case "repeat": // Caso este ícone seja repeat, a função nextMusic é chamada para que a próxima música toque
             break;
         case "repeat_one": // Caso este ícone seja repeat_one, então a hora atual da música que está tocando muda para 0, retornando ao ínicio
