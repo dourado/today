@@ -269,3 +269,20 @@ const darkMode = document.querySelector('.dark-mode'),
 darkMode.onclick = () => {
     body.classList.toggle('is-dark');
 }
+
+// Verifica a preferência de cor do usuário
+const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+// Aplica a classe 'is-dark' se a preferência for pelo modo escuro
+if (userPrefersDark) {
+    body.classList.add('is-dark');
+}
+
+// Adiciona um listener para mudanças na preferência de cor
+window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+    if (e.matches) {
+        body.classList.add('is-dark');
+    } else {
+        body.classList.remove('is-dark');
+    }
+});
