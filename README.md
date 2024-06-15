@@ -19,7 +19,3 @@ This is a simple web application that displays a daily message and plays an audi
 ## How to Run
 
 Visit the live site at [Golden Today](https://golden-today.vercel.app/)
-
-## License
-
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/)
