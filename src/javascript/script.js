@@ -1,17 +1,17 @@
 // Seleciona todas as tags ou elementos necessários
 const wrapper = document.querySelector(".wrapper"),
-    musicImage = wrapper.querySelector(".img-area img"),
-    musicName = wrapper.querySelector(".song-details .name"),
-    musicArtist = wrapper.querySelector(".song-details .artist"),
-    mainAudio = wrapper.querySelector("#main-audio"),
-    playPauseButton = wrapper.querySelector(".play-pause"),
-    progressArea = wrapper.querySelector(".progress-area"),
-    progressBar = wrapper.querySelector(".progress-bar"),
-    musicList = wrapper.querySelector(".music-list"),
-    showMoreButton = wrapper.querySelector("#more-music"),
-    hideMusicButton = musicList.querySelector("#close"),
-    repeatButton = wrapper.querySelector("#repeat-plist"),
-    ulTag = wrapper.querySelector("ul");
+musicImage = wrapper.querySelector(".img-area img"),
+musicName = wrapper.querySelector(".song-details .name"),
+musicArtist = wrapper.querySelector(".song-details .artist"),
+mainAudio = wrapper.querySelector("#main-audio"),
+playPauseButton = wrapper.querySelector(".play-pause"),
+progressArea = wrapper.querySelector(".progress-area"),
+progressBar = wrapper.querySelector(".progress-bar"),
+musicList = wrapper.querySelector(".music-list"),
+showMoreButton = wrapper.querySelector("#more-music"),
+hideMusicButton = musicList.querySelector("#close"),
+ulTag = wrapper.querySelector("ul"),
+allLiTags = ulTag.querySelectorAll("li");
     
 // Carrega música aleatória na atualização da página
 const today = new Date().getDay();
@@ -24,7 +24,6 @@ window.addEventListener("load", () => {
     repeatButton.innerText = "repeat_one"; // Define o texto inicial do botão como "repeat_one"
     repeatButton.classList.add("material-icons"); // Adiciona a classe do ícone
     repeatButton.setAttribute("title", "Song Looped"); // Define o título inicial
-    highlightNextMusic();
 });
 
 // Função que realiza o carregamento da Música
@@ -67,11 +66,13 @@ function pauseMusic() {
 
 // Função Next (Próximo)
 function nextMusic() {
-    musicIndex = (musicIndex + 1) % allMusic.length;
+    // Incrementa +1 no index da música
+    musicIndex++;
+    // Se musicIndex for maior do que o comprimento do total de músicas, então a musicIndex voltará para a primeira música
+    musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
     loadMusic(musicIndex);
     playMusic();
     playingNow();
-    highlightNextMusic(); // Destaque a próxima música após avançar para a próxima música
 }
 
 // Arrow Function (Funções de seta que permitem escrever uma sintaxe de função mais curta)
@@ -130,59 +131,55 @@ progressArea.addEventListener("click", (e) => {
 });
 
 // Botão de Repetir e Aleatório
-repeatButton.addEventListener("click", () => {
+const repeatButton = wrapper.querySelector("#repeat-plist");
+repeatButton.addEventListener("click", ()=> {
     let getText = repeatButton.innerText; // Obtém innerText do ícone
 
-    switch (getText) {
+    switch(getText) { 
         case "repeat": // Caso o ícone seja repeat, mudar para repeat_one
             repeatButton.innerText = "repeat_one";
             repeatButton.setAttribute("title", "Song Looped");
-            mainAudio.loop = true; // Define loop como true
             break;
-        case "repeat_one": // Caso o ícone seja repeat_one, mudar para shuffle
+        case "repeat_one": // Caso o ícone seja reppeat_one, mudar para shuffle
             repeatButton.innerText = "shuffle";
             repeatButton.setAttribute("title", "Playback Shuffle");
-            mainAudio.loop = false; // Define loop como false
             break;
         case "shuffle": // Caso o ícone seja shuffle, mudar para repeat
             repeatButton.innerText = "repeat";
             repeatButton.setAttribute("title", "Playlist Loop");
-            mainAudio.loop = false; // Define loop como false
             break;
     }
 });
 
 // Repetindo a música
-mainAudio.addEventListener("ended", () => {
-    // Não faz nada quando a música acaba, já que o loop está definido
+mainAudio.addEventListener("ended", ()=> {
+    let getText = repeatButton.innerText; // Obtém innerText do ícone
+
+    switch(getText) { 
+        case "repeat": // Caso este ícone seja repeat, a função nextMusic é chamada para que a próxima música toque
+            break;
+        case "repeat_one": // Caso este ícone seja repeat_one, então a hora atual da música que está tocando muda para 0, retornando ao ínicio
+            mainAudio.currentTime = 0;
+            loadMusic(musicIndex);
+            playMusic();
+            playingNow();
+            break;
+        case "shuffle": // Caso o ícone seja shuffle, mudar para repeat
+            mainAudio.currentTime = 0;
+            loadMusic(musicIndex);
+            playMusic();
+            break;
+    }
 });
 
 // Função Exibir e Fechar Playlist
 showMoreButton.addEventListener("click", () => {
-    highlightNextMusic(); // Destaque a próxima música
     musicList.classList.toggle("show");
 });
 
 hideMusicButton.addEventListener("click", () => {
     showMoreButton.click();
 });
-
-// Função para destacar a próxima música na lista
-function highlightNextMusic() {
-    const nextMusicIndex = (musicIndex + 1) % allMusic.length;
-    // const nextDayElement = document.querySelector('.title-music');
-    // nextDayElement.textContent = allMusic[nextMusicIndex].name; // Atualize o nome da próxima música
-
-    const allLiTags = ulTag.querySelectorAll("li");
-    allLiTags.forEach(li => li.classList.remove("highlight-next"));
-    const nextLi = ulTag.querySelector(`li[li-index="${nextMusicIndex + 1}"]`); // Ajusta para selecionar o próximo li corretamente
-    if (nextLi) {
-        nextLi.classList.add("highlight-next");
-    }
-}
-
-
-// Remove the duplicate declaration of 'ulTag'
 
 // Cria <li> de acordo com o comprimento do array (Exibindo a Lista de Música)
 if (today == 6) {
@@ -191,18 +188,18 @@ if (today == 6) {
     nextMusicTomorrow = today + 1;
 }
 // Passando o nome da música e artista do array para a li
-let liTag = `<li li-index="${nextMusicTomorrow}">
+let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}" li-index="${nextMusicTomorrow}">
                 <div class="row">
                     <span>${allMusic[nextMusicTomorrow].name}</span>
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
                 </div>
-                <audio class="${allMusic[nextMusicTomorrow].src}" src="audio/${allMusic[nextMusicTomorrow].src}.mp3"></audio>
-                <span id="${allMusic[nextMusicTomorrow].src}" class="audio-duration">1:37</span>
+                <audio class="${allMusic[nextMusicTomorrow].src}" src="${allMusic[nextMusicTomorrow].src}"></audio>
+                <span class="audio-duration">1:37</span>
             </li>`;
 ulTag.insertAdjacentHTML("beforeend", liTag);
 
-let liAudioDuration = ulTag.querySelector(`#${allMusic[nextMusicTomorrow].src}`);
-let liAudioTag = ulTag.querySelector(`.${allMusic[nextMusicTomorrow].src}`);
+let liAudioTag = ulTag.querySelector(`li[data-src="${allMusic[nextMusicTomorrow].src}"] audio`);
+let liAudioDuration = ulTag.querySelector(`li[data-src="${allMusic[nextMusicTomorrow].src}"] .audio-duration`);
 
 liAudioTag.addEventListener("loadeddata", () => {
     let audioDuration = liAudioTag.duration;
@@ -211,14 +208,11 @@ liAudioTag.addEventListener("loadeddata", () => {
     if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
         totalSeconds = `0${totalSeconds}`;
     }
-
     liAudioDuration.innerText = `${totalMinutes}:${totalSeconds}`;
-    // Adiciona o atributo t-duration
     liAudioDuration.setAttribute("t-duration", `${totalMinutes}:${totalSeconds}`);
 });
 
 // Trocando música específica 
-const allLiTags = ulTag.querySelectorAll("li");
 function playingNow() {
     for (let j = 0; j < allLiTags.length; j++) {
         let audioTag = allLiTags[j].querySelector(".audio-duration");
@@ -239,8 +233,6 @@ function playingNow() {
         // Adiciona o atributo "onclick" em todas as li tags
         allLiTags[j].setAttribute("onclick", "clicked(this)");
     }
-
-    highlightNextMusic(); // Atualiza a próxima música
 }
 
 // Tocando música na tag li
