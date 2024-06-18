@@ -43,5 +43,5 @@ today/
 <br>
 <small style="font-size: 12px;">References:</small><br>
 <small style="font-size: 12px;">The design of this project was enhanced from the projects:</small><br>
-<small style="font-size: 12px;">&bull;</small> <a href="https://github.com/baires/shouldideploy" style="font-size: 12px;">Should I Deploy?</a><br>
-<small style="font-size: 12px;">&bull;</small> <a href="https://github.com/PedroCantanhede/music-player" style="font-size: 12px;">Music Player</a>
+<small style="font-size: 12px;">&bull;</small> <a target="_blank" href="https://github.com/baires/shouldideploy" style="font-size: 12px;">Should I Deploy?</a><br>
+<small style="font-size: 12px;">&bull;</small> <a target="_blank" href="https://github.com/PedroCantanhede/music-player" style="font-size: 12px;">Music Player</a>
