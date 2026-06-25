@@ -226,12 +226,17 @@ body {
     font-variation-settings: 'FILL' 1;
 }
 
-/* Loop toggle: keep the accent gradient while active (looping), grey when off */
+/* Loop toggle: keep the accent gradient while active (looping), grey when off.
+   Clear the gradient and set color + -webkit-text-fill-color so the grey shows
+   even where -webkit-text-fill-color is unsupported. */
 #repeat-plist[aria-pressed="false"] {
+    background: none;
+    color: #b8b8b8;
     -webkit-text-fill-color: #b8b8b8;
 }
 
 .is-dark #repeat-plist[aria-pressed="false"] {
+    color: #5a5a5a;
     -webkit-text-fill-color: #5a5a5a;
 }
 
