@@ -224,6 +224,11 @@ body {
     margin-left: -13px;
 }
 
+/* Loop toggle: fill the glyph while it's active (looping) */
+#repeat-plist[aria-pressed="true"] {
+    font-variation-settings: 'FILL' 1;
+}
+
 .controls .play-pause {
     width: 54px;
     height: 54px;
