@@ -101,7 +101,10 @@ function pauseMusic() {
 // Since it's one song per day, next/prev don't change track:
 // they just restart the day's song from the beginning.
 function replayCurrentMusic() {
-    mainAudio.currentTime = 0;
+    // Only seek once metadata has loaded; otherwise it can throw InvalidStateError.
+    if (mainAudio.readyState > 0) {
+        mainAudio.currentTime = 0;
+    }
     playMusic();
 }
 
@@ -125,8 +128,11 @@ mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime; // Current playback time
     const duration = e.target.duration; // Total song duration
 
-    let progressWidth = (currentTime / duration) * 100;
-    progressBar.style.width = `${progressWidth}%`;
+    // Only update the bar when duration is known; avoids width: NaN%.
+    if (isFinite(duration) && duration > 0) {
+        let progressWidth = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressWidth}%`;
+    }
 
     let musicCurrentTime = wrapper.querySelector(".current");
 
