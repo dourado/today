@@ -117,10 +117,12 @@ nextButton.addEventListener("click", replayCurrentMusic);
 
 // Play / Pause button
 playPauseButton.addEventListener("click", () => {
-    const isMusicPause = wrapper.classList.contains("paused");
+    // The "paused" class is present while the song is playing (added in
+    // playMusic, removed in pauseMusic), so it reflects the playing state.
+    const isPlaying = wrapper.classList.contains("paused");
 
-    // If paused, call pauseMusic(); otherwise call playMusic()
-    isMusicPause ? pauseMusic() : playMusic();
+    // If it's playing, pause it; otherwise play.
+    isPlaying ? pauseMusic() : playMusic();
 });
 
 // Update the progress bar as the song plays
