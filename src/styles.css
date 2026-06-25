@@ -189,6 +189,14 @@ body {
     color: var(--light-black);
 }
 
+/* Foco visível para navegação por teclado */
+.wrapper [role="button"]:focus-visible,
+.dropdown-content a:focus-visible {
+    outline: 2px solid var(--main-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
 /* Icons Controls */
 .controls {
     margin: 40px 0 5px 0;

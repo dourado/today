@@ -221,6 +221,9 @@ liAudioTag.addEventListener("loadeddata", () => {
 // O item da lista é uma prévia da música de amanhã, mas — como é uma música por
 // dia — ativá-lo apenas reinicia a faixa do dia, igual aos botões next/prev.
 const tomorrowLi = ulTag.querySelector("li");
+tomorrowLi.setAttribute("role", "button");
+tomorrowLi.setAttribute("tabindex", "0");
+tomorrowLi.setAttribute("aria-label", "Tocar a música de hoje");
 tomorrowLi.addEventListener("click", replayCurrentMusic);
 
 // Dark Mode
