@@ -17,13 +17,15 @@ const wrapper = document.querySelector(".wrapper"),
 // Show / hide the dropdown content
 dropdownToggle.addEventListener("click", (event) => {
     event.stopPropagation(); // Prevent the icon click from closing the dropdown
-    dropdownContent.classList.toggle("show-dropdown");
+    const isOpen = dropdownContent.classList.toggle("show-dropdown");
+    dropdownToggle.setAttribute("aria-expanded", isOpen);
 });
 
 // Close the dropdown when clicking outside of it
 document.addEventListener("click", (event) => {
     if (!dropdownToggle.contains(event.target) && !dropdownContent.contains(event.target)) {
         dropdownContent.classList.remove("show-dropdown");
+        dropdownToggle.setAttribute("aria-expanded", "false");
     }
 });
 
@@ -234,7 +236,7 @@ liAudioTag.addEventListener("loadeddata", () => {
 const tomorrowLi = ulTag.querySelector("li");
 tomorrowLi.setAttribute("role", "button");
 tomorrowLi.setAttribute("tabindex", "0");
-tomorrowLi.setAttribute("aria-label", "Play today's song");
+tomorrowLi.setAttribute("aria-label", `${allMusic[nextMusicTomorrow].name}'s Song — play today's song`);
 tomorrowLi.addEventListener("click", replayCurrentMusic);
 
 // Dark Mode
