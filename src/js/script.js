@@ -170,13 +170,15 @@ mainAudio.addEventListener("ended", () => {
 
 // Seek the song based on where the progress bar was clicked
 progressArea.addEventListener("click", (e) => {
-    let progressWidthval = progressArea.clientWidth; // Progress bar width
-    let clickedOffSetX = e.offsetX; // Click offset
-    let songDuration = mainAudio.duration; // Total song duration
+    // Use the click position relative to the bar so clicking the filled portion
+    // (a child element) still seeks correctly — e.offsetX would be child-relative.
+    const rect = progressArea.getBoundingClientRect();
+    const clickedOffsetX = e.clientX - rect.left;
+    const songDuration = mainAudio.duration;
 
     // Only seek when duration and width are usable; avoids a NaN/Infinity currentTime.
-    if (isFinite(songDuration) && songDuration > 0 && progressWidthval > 0) {
-        mainAudio.currentTime = (clickedOffSetX / progressWidthval) * songDuration;
+    if (isFinite(songDuration) && songDuration > 0 && rect.width > 0) {
+        mainAudio.currentTime = (clickedOffsetX / rect.width) * songDuration;
     }
     playMusic();
 });
