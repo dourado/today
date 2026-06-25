@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" href="img/coffee.png" type="image/x-icon">
     <title>Golden Today</title>
 </head>
@@ -28,8 +27,8 @@
             </div>
             <span>Today</span>
             <div class="dark-mode" role="button" tabindex="0" aria-label="Toggle dark mode">
-                <i class='bx bx-moon'></i>
-                <i class='bx bxs-moon'></i>
+                <i class="material-symbols-rounded moon-light" aria-hidden="true">dark_mode</i>
+                <i class="material-symbols-rounded moon-dark" aria-hidden="true">dark_mode</i>
             </div>
         </div>
         <div class="img-area">
@@ -52,20 +51,20 @@
         <div class="controls">
             <i id="repeat-plist" class="material-symbols-rounded" title="No Loop" role="button" tabindex="0"
                 aria-label="Toggle song loop" aria-pressed="false">repeat</i>
-            <i id="prev" class='bx bx-skip-previous' role="button" tabindex="0" aria-label="Restart song"></i>
+            <i id="prev" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song">skip_previous</i>
             <div class="play-pause" role="button" tabindex="0" aria-label="Play or pause">
-                <i class='bx bx-play'></i>
+                <i class="material-symbols-rounded">play_arrow</i>
             </div>
-            <i id="next" class='bx bx-skip-next' role="button" tabindex="0" aria-label="Restart song"></i>
-            <i id="more-music" class='bx bxs-playlist' role="button" tabindex="0" aria-label="Show playlist"></i>
+            <i id="next" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song">skip_next</i>
+            <i id="more-music" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Show playlist">playlist_play</i>
         </div>
         <div class="music-list">
             <div class="header">
                 <div class="row">
-                    <i class='bx bxs-playlist' aria-hidden="true"></i>
+                    <i class="material-symbols-rounded" aria-hidden="true">playlist_play</i>
                     <span class="title-music">Tomorrow</span>
                 </div>
-                <i id="close" class='bx bx-x' role="button" tabindex="0" aria-label="Close playlist"></i>
+                <i id="close" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Close playlist">close</i>
             </div>
             <ul>
                 <!-- Song list -->

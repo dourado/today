@@ -84,14 +84,14 @@ function fetchDeployStatus() {
 // Play
 function playMusic() {
     wrapper.classList.add("paused");
-    playPauseButton.innerHTML = "<i class='bx bx-pause'></i>";
+    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause</i>";
     mainAudio.play();
 }
 
 // Pause
 function pauseMusic() {
     wrapper.classList.remove("paused");
-    playPauseButton.innerHTML = "<i class='bx bx-play'></i>";
+    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_arrow</i>";
     mainAudio.pause();
 }
 

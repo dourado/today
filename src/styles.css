@@ -62,11 +62,6 @@ body {
     color: var(--light-black);
 }
 
-.top-bar .bx {
-    font-size: 1.3rem;
-    color: var(--light-black);
-}
-
 .top-bar span {
     font-size: 18px;
     color: var(--light-black);
@@ -360,19 +355,20 @@ ul li.playing {
     text-decoration: none;
 }
 
-.dark-mode .bx {
+.dark-mode i {
     position: absolute;
     top: 50%;
     left: 50%;
+    font-size: 1.3rem;
     transform: translate(-50%, -50%);
     transition: .5s;
 }
 
-.bx-moon {
+.moon-light {
     color: var(--main-color);
 }
 
-.bxs-moon {
+.moon-dark {
     color: var(--white-color);
     opacity: 0;
     visibility: hidden;
@@ -390,17 +386,14 @@ ul li.playing {
     background: #313131;
 }
 
-.is-dark .bx-moon {
+.is-dark .moon-light {
     opacity: 0;
     visibility: hidden;
 }
 
-.is-dark .bxs-moon {
+.is-dark .moon-dark {
     opacity: 1;
     visibility: visible;
-}
-
-.is-dark .bxs-moon {
     color: var(--white-mode);
 }
 
