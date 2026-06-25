@@ -6,6 +6,7 @@ const wrapper = document.querySelector(".wrapper"),
     playPauseButton = wrapper.querySelector(".play-pause"),
     progressArea = wrapper.querySelector(".progress-area"),
     progressBar = wrapper.querySelector(".progress-bar"),
+    currentTimeEl = wrapper.querySelector(".current"),
     musicList = wrapper.querySelector(".music-list"),
     showMoreButton = wrapper.querySelector("#more-music"),
     hideMusicButton = musicList.querySelector("#close"),
@@ -30,7 +31,7 @@ document.addEventListener("click", (event) => {
 
 // Pick the day's song on page load
 const today = new Date().getDay();
-let musicIndex = today;
+const musicIndex = today;
 
 window.addEventListener("load", () => {
     loadMusic(musicIndex); // Call loadMusic() when the window loads
@@ -138,8 +139,6 @@ mainAudio.addEventListener("timeupdate", (e) => {
         progressBar.style.width = `${progressWidth}%`;
     }
 
-    let musicCurrentTime = wrapper.querySelector(".current");
-
     // Update the current playback time
     let currentMinutes = Math.floor(currentTime / 60); // Convert to minutes
     let currentSeconds = Math.floor(currentTime % 60); // Convert to seconds
@@ -148,7 +147,7 @@ mainAudio.addEventListener("timeupdate", (e) => {
     }
 
     // Show the current minutes and seconds
-    musicCurrentTime.innerText = `${currentMinutes}:${currentSeconds}`;
+    currentTimeEl.innerText = `${currentMinutes}:${currentSeconds}`;
 });
 
 // Update the total duration once the song data loads (registered ONCE)
@@ -260,10 +259,10 @@ function syncDarkModePressed() {
     darkMode.setAttribute('aria-pressed', body.classList.contains('is-dark'));
 }
 
-darkMode.onclick = () => {
+darkMode.addEventListener('click', () => {
     body.classList.toggle('is-dark');
     syncDarkModePressed();
-}
+});
 
 // Cache the prefers-color-scheme query (may be absent in older browsers)
 const darkModeQuery = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
