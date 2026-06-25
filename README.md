@@ -9,25 +9,31 @@ Visit the live site at [Golden Today](https://golden-today.vercel.app/)
 
 ## Features
 
-- Daily message display
-- Automatic daily audio playback
-- Responsive design for mobile and tablet compatibility
-- Automatic dark mode based on device preference
+- "Should I deploy today?" status message, fetched live from the [shouldideploy.today](https://shouldideploy.today) API
+- A different audio track for each day of the week, played automatically
+- Loop toggle for the daily song
+- Dark mode — automatic (device preference) with a manual toggle
+- Keyboard-accessible, screen-reader-friendly controls
+- Responsive design for mobile and tablet
 
 ## Project Structure
 
 ```plaintext
 today/
+├── .github/
+│   └── dependabot.yml
 ├── src/
-│   ├── audio/
-│   │   └── daily-audio.mp3
+│   ├── audio/              # one track per weekday (sunday.mp3 … saturday.mp3)
+│   ├── img/
+│   │   └── coffee.png
 │   ├── js/
-│   │   └── script.js
+│   │   ├── music-list.js   # daily audio file paths
+│   │   ├── script.js       # player, dark mode, accessibility
+│   │   └── site.webmanifest
 │   ├── index.html
 │   └── styles.css
-├── .gitignore
 ├── README.md
-└── LICENSE
+└── SECURITY.md
 ```
 
 - `src/`: Contains the source files for the project.
