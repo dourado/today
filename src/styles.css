@@ -47,6 +47,10 @@ body {
     cursor: pointer;
 }
 
+[role="button"] {
+    cursor: pointer;
+}
+
 .top-bar,
 .progress-area .timer,
 .controls,
