@@ -207,7 +207,7 @@ if (today == 6) {
     nextMusicTomorrow = today + 1;
 }
 // Pass the song name and artist from the array into the li
-let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}" li-index="${nextMusicTomorrow}">
+let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}">
                 <div class="row">
                     <span>${allMusic[nextMusicTomorrow].name}'s Song</span>
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
@@ -228,7 +228,6 @@ liAudioTag.addEventListener("loadeddata", () => {
         totalSeconds = `0${totalSeconds}`;
     }
     liAudioDuration.innerText = `${totalMinutes}:${totalSeconds}`;
-    liAudioDuration.setAttribute("t-duration", `${totalMinutes}:${totalSeconds}`);
 });
 
 // The list item previews tomorrow's song, but — since it's one song per
