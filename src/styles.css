@@ -224,6 +224,11 @@ body {
     margin-left: -13px;
 }
 
+/* Loop toggle in its "off" (no-loop) state */
+.controls #repeat-plist.inactive {
+    opacity: 0.4;
+}
+
 .controls .play-pause {
     width: 54px;
     height: 54px;

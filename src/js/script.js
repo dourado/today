@@ -34,10 +34,7 @@ let musicIndex = today;
 window.addEventListener("load", () => {
     loadMusic(musicIndex); // Call loadMusic() when the window loads
     fetchDeployStatus();   // Fetch the day's deploy status (once)
-    mainAudio.loop = true; // Loop by default
-    repeatButton.innerText = "repeat_one"; // Set the button's initial icon to "repeat_one"
-    repeatButton.classList.add("material-icons"); // Add the icon class
-    repeatButton.setAttribute("title", "Song Looped"); // Set the initial title
+    setLoopState(false); // No loop is the default
 });
 
 // Loads the current song
@@ -176,25 +173,20 @@ progressArea.addEventListener("click", (e) => {
     playMusic();
 });
 
-// Repeat / Shuffle button
+// Loop toggle: two states only — repeat_one (loop the day's song) and
+// no_loop (the default). Reflects state on the icon, title and aria-pressed.
 const repeatButton = wrapper.querySelector("#repeat-plist");
-repeatButton.addEventListener("click", () => {
-    let getText = repeatButton.innerText; // Get the icon's innerText
 
-    switch (getText) {
-        case "repeat": // If icon is repeat, switch to repeat_one
-            repeatButton.innerText = "repeat_one";
-            repeatButton.setAttribute("title", "Song Looped");
-            break;
-        case "repeat_one": // If icon is repeat_one, switch to shuffle
-            repeatButton.innerText = "shuffle";
-            repeatButton.setAttribute("title", "Playback Shuffle");
-            break;
-        case "shuffle": // If icon is shuffle, switch to repeat
-            repeatButton.innerText = "repeat";
-            repeatButton.setAttribute("title", "Playlist Loop");
-            break;
-    }
+function setLoopState(loopOn) {
+    mainAudio.loop = loopOn;
+    repeatButton.innerText = "repeat_one";
+    repeatButton.classList.toggle("inactive", !loopOn); // dim when no loop
+    repeatButton.setAttribute("aria-pressed", loopOn);
+    repeatButton.setAttribute("title", loopOn ? "Song Looped" : "No Loop");
+}
+
+repeatButton.addEventListener("click", () => {
+    setLoopState(!mainAudio.loop);
 });
 
 // Show / hide the playlist
