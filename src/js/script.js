@@ -196,6 +196,7 @@ hideMusicButton.addEventListener("click", () => {
 });
 
 // Cria <li> de acordo com o comprimento do array (Exibindo a Lista de Música)
+let nextMusicTomorrow;
 if (today == 6) {
     nextMusicTomorrow = 0;
 } else {
@@ -276,7 +277,7 @@ if (userPrefersDark) {
 }
 
 // Adiciona um listener para mudanças na preferência de cor
-window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (e.matches) {
         body.classList.add('is-dark');
     } else {
