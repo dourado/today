@@ -278,6 +278,7 @@ if (window.matchMedia) {
 // including dynamically inserted ones (event delegation on document).
 document.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
+    if (e.repeat) return; // ignore auto-repeat while a key is held
     const target = e.target.closest('[role="button"]');
     if (!target) return;
     e.preventDefault();
