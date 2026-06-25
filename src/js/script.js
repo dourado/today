@@ -278,6 +278,7 @@ if (darkModeQuery) {
 document.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     if (e.repeat) return; // ignore auto-repeat while a key is held
+    if (!(e.target instanceof Element)) return; // target may be a non-Element EventTarget
     const target = e.target.closest('[role="button"]');
     if (!target) return;
     e.preventDefault();
