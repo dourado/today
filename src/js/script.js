@@ -240,8 +240,14 @@ tomorrowLi.addEventListener("click", replayCurrentMusic);
 const darkMode = document.querySelector('.dark-mode'),
     body = document.querySelector('.page');
 
+// Mantém o aria-pressed do toggle em sincronia com o estado do tema (a11y)
+function syncDarkModePressed() {
+    darkMode.setAttribute('aria-pressed', body.classList.contains('is-dark'));
+}
+
 darkMode.onclick = () => {
     body.classList.toggle('is-dark');
+    syncDarkModePressed();
 }
 
 // Verifica a preferência de cor do usuário
@@ -251,6 +257,7 @@ const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-s
 if (userPrefersDark) {
     body.classList.add('is-dark');
 }
+syncDarkModePressed(); // Estado inicial
 
 // Adiciona um listener para mudanças na preferência de cor
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -259,6 +266,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
     } else {
         body.classList.remove('is-dark');
     }
+    syncDarkModePressed();
 });
 
 // Acessibilidade: aciona com Enter/Espaço qualquer elemento role="button",
