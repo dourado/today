@@ -11,7 +11,6 @@ const wrapper = document.querySelector(".wrapper"),
     showMoreButton = wrapper.querySelector("#more-music"),
     hideMusicButton = musicList.querySelector("#close"),
     ulTag = wrapper.querySelector("ul"),
-    allLiTags = ulTag.querySelectorAll("li"),
     dropdownToggle = document.querySelector("#dropdown-toggle"),
     dropdownContent = document.querySelector(".dropdown-content");
 
@@ -35,7 +34,6 @@ let musicIndex = today;
 window.addEventListener("load", () => {
     loadMusic(musicIndex); // Chama a função loadMusic() quando a janela é carregada
     fetchDeployStatus();   // Busca o status de deploy do dia (uma vez)
-    playingNow();
     mainAudio.loop = true; // Define o looping como padrão
     repeatButton.innerText = "repeat_one"; // Define o texto inicial do botão como "repeat_one"
     repeatButton.classList.add("material-icons"); // Adiciona a classe do ícone
@@ -95,7 +93,6 @@ function pauseMusic() {
 function replayCurrentMusic() {
     mainAudio.currentTime = 0;
     playMusic();
-    playingNow();
 }
 
 // Botões Próximo / Anterior — reiniciam a faixa do dia
@@ -112,7 +109,6 @@ playPauseButton.addEventListener("click", () => {
 
     // Se isMusicPaused for verdadeiro, chamar função pauseMusic(), senão chamar função playMusic()
     isMusicPause ? pauseMusic() : playMusic();
-    playingNow();
 });
 
 // Atualiza a barra de progresso conforme a música rola
@@ -227,38 +223,10 @@ liAudioTag.addEventListener("loadeddata", () => {
     liAudioDuration.setAttribute("t-duration", `${totalMinutes}:${totalSeconds}`);
 });
 
-// Trocando música específica 
-function playingNow() {
-    for (let j = 0; j < allLiTags.length; j++) {
-        let audioTag = allLiTags[j].querySelector(".audio-duration");
-        // Remove a class de playing de todas as outras
-        if (allLiTags[j].classList.contains("playing")) {
-            allLiTags[j].classList.remove("playing");
-            // Pega valor de duração de áudio e passar para .audio-duration innertext
-            let adDuration = audioTag.getAttribute("t-duration");
-            audioTag.innerText = adDuration; // Passa o valor t-duration para a duração do áudio innerText
-        }
-
-        // Se houver uma tag li cujo índice li é igual a musicIndex, então estilizá-la com a classe playing
-        if (allLiTags[j].getAttribute("li-index") == musicIndex + 1) {
-            allLiTags[j].classList.add("playing");
-            audioTag.innerText = "Today";
-        }
-
-        // Adiciona o atributo "onclick" em todas as li tags
-        allLiTags[j].setAttribute("onclick", "clicked(this)");
-    }
-}
-
-// Tocando música na tag li
-function clicked(element) {
-    // Índice li de determinada tag li clicada
-    let getLiIndex = element.getAttribute("li-index");
-    musicIndex = getLiIndex - 1; // Passando esse índice li para musicIndex
-    loadMusic(musicIndex);
-    playMusic();
-    playingNow();
-}
+// O item da lista é uma prévia da música de amanhã, mas — como é uma música por
+// dia — ativá-lo apenas reinicia a faixa do dia, igual aos botões next/prev.
+const tomorrowLi = ulTag.querySelector("li");
+tomorrowLi.addEventListener("click", replayCurrentMusic);
 
 // Dark Mode
 const darkMode = document.querySelector('.dark-mode'),
