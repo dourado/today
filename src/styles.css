@@ -189,7 +189,7 @@ body {
     color: var(--light-black);
 }
 
-/* Foco visível para navegação por teclado */
+/* Visible focus for keyboard navigation */
 .wrapper [role="button"]:focus-visible,
 .dropdown-content a:focus-visible {
     outline: 2px solid var(--main-color);
@@ -272,7 +272,7 @@ body {
     transition: all 0.14s ease;
 }
 
-/* Classe Utilizada no JS */
+/* Class used by the JS */
 .music-list.show {
     bottom: 0;
     opacity: 1;
@@ -457,7 +457,7 @@ ul li.playing {
     background: #a09f9f;
 }
 
-/* Tela cheia em telas até 1024px (mobile e tablets) */
+/* Full screen on viewports up to 1024px (mobile and tablets) */
 @media (max-width: 1024px) {
     .wrapper {
         display: inline-grid;

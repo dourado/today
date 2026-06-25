@@ -1,4 +1,4 @@
-// Seleciona todas as tags ou elementos necessários
+// Select all the required tags / elements
 const wrapper = document.querySelector(".wrapper"),
     musicImage = wrapper.querySelector(".img-area img"),
     musicName = wrapper.querySelector(".song-details .name"),
@@ -14,41 +14,41 @@ const wrapper = document.querySelector(".wrapper"),
     dropdownToggle = document.querySelector("#dropdown-toggle"),
     dropdownContent = document.querySelector(".dropdown-content");
 
-// Função para exibir e ocultar o conteúdo suspenso
+// Show / hide the dropdown content
 dropdownToggle.addEventListener("click", (event) => {
-    event.stopPropagation(); // Impede que o clique no ícone feche o menu suspenso
+    event.stopPropagation(); // Prevent the icon click from closing the dropdown
     dropdownContent.classList.toggle("show-dropdown");
 });
 
-// Função para fechar a barra suspensa se clicar fora dela
+// Close the dropdown when clicking outside of it
 document.addEventListener("click", (event) => {
     if (!dropdownToggle.contains(event.target) && !dropdownContent.contains(event.target)) {
         dropdownContent.classList.remove("show-dropdown");
     }
 });
 
-// Carrega música aleatória na atualização da página
+// Pick the day's song on page load
 const today = new Date().getDay();
 let musicIndex = today;
 
 window.addEventListener("load", () => {
-    loadMusic(musicIndex); // Chama a função loadMusic() quando a janela é carregada
-    fetchDeployStatus();   // Busca o status de deploy do dia (uma vez)
-    mainAudio.loop = true; // Define o looping como padrão
-    repeatButton.innerText = "repeat_one"; // Define o texto inicial do botão como "repeat_one"
-    repeatButton.classList.add("material-icons"); // Adiciona a classe do ícone
-    repeatButton.setAttribute("title", "Song Looped"); // Define o título inicial
+    loadMusic(musicIndex); // Call loadMusic() when the window loads
+    fetchDeployStatus();   // Fetch the day's deploy status (once)
+    mainAudio.loop = true; // Loop by default
+    repeatButton.innerText = "repeat_one"; // Set the button's initial icon to "repeat_one"
+    repeatButton.classList.add("material-icons"); // Add the icon class
+    repeatButton.setAttribute("title", "Song Looped"); // Set the initial title
 });
 
-// Função que realiza o carregamento da Música
+// Loads the current song
 function loadMusic(indexNumb) {
     musicName.innerText = allMusic[indexNumb].name;
     musicArtist.innerText = allMusic[indexNumb].artist;
     mainAudio.src = allMusic[indexNumb].src;
 }
 
-// Monta a mensagem de deploy com estrutura fixa e o texto dinâmico via
-// textContent, evitando injeção de HTML caso a API retorne marcação (XSS).
+// Build the deploy message with a fixed structure and the dynamic text via
+// textContent, avoiding HTML injection if the API returns markup (XSS).
 function renderDeployMessage(el, answer, quote) {
     el.replaceChildren();
     el.append("SHOULD I DEPLOY TODAY? ");
@@ -57,7 +57,7 @@ function renderDeployMessage(el, answer, quote) {
     el.append(strong, document.createElement("br"), `"${quote}"`);
 }
 
-// Busca o status de deploy do dia e atualiza a mensagem + as cores da UI
+// Fetch the day's deploy status and update the message + UI colors
 function fetchDeployStatus() {
     const messageElement = document.getElementById('message');
 
@@ -79,115 +79,114 @@ function fetchDeployStatus() {
             }
         })
         .catch(() => {
-            // Falha de rede / API fora do ar: não deixa a UI vazia
-            renderDeployMessage(messageElement, '?', 'Não foi possível consultar agora.');
+            // Network failure / API down: don't leave the UI empty
+            renderDeployMessage(messageElement, '?', "Couldn't check right now.");
         });
 }
 
-// Função Play
+// Play
 function playMusic() {
     wrapper.classList.add("paused");
     playPauseButton.innerHTML = "<i class='bx bx-pause'></i>";
     mainAudio.play();
 }
 
-// Função Pause
+// Pause
 function pauseMusic() {
     wrapper.classList.remove("paused");
     playPauseButton.innerHTML = "<i class='bx bx-play'></i>";
     mainAudio.pause();
 }
 
-// Como é uma música por dia, next/prev não trocam de faixa:
-// apenas reiniciam a música do dia do começo.
+// Since it's one song per day, next/prev don't change track:
+// they just restart the day's song from the beginning.
 function replayCurrentMusic() {
     mainAudio.currentTime = 0;
     playMusic();
 }
 
-// Botões Próximo / Anterior — reiniciam a faixa do dia
+// Next / Previous buttons — restart the day's song
 const prevButton = wrapper.querySelector("#prev"),
     nextButton = wrapper.querySelector("#next");
 
 prevButton.addEventListener("click", replayCurrentMusic);
 nextButton.addEventListener("click", replayCurrentMusic);
 
-// Arrow Function (Funções de seta que permitem escrever uma sintaxe de função mais curta)
-// Botão Play
+// Play / Pause button
 playPauseButton.addEventListener("click", () => {
     const isMusicPause = wrapper.classList.contains("paused");
 
-    // Se isMusicPaused for verdadeiro, chamar função pauseMusic(), senão chamar função playMusic()
+    // If paused, call pauseMusic(); otherwise call playMusic()
     isMusicPause ? pauseMusic() : playMusic();
 });
 
-// Atualiza a barra de progresso conforme a música rola
+// Update the progress bar as the song plays
 mainAudio.addEventListener("timeupdate", (e) => {
-    const currentTime = e.target.currentTime; // Obtendo a hora exata da música
-    const duration = e.target.duration; // Obtendo a duração total da música
+    const currentTime = e.target.currentTime; // Current playback time
+    const duration = e.target.duration; // Total song duration
 
     let progressWidth = (currentTime / duration) * 100;
     progressBar.style.width = `${progressWidth}%`;
 
     let musicCurrentTime = wrapper.querySelector(".current");
 
-    // Atualiza a reprodução da música com a hora atual
-    let currentMinutes = Math.floor(currentTime / 60); // Convertendo para Minutos
-    let currentSeconds = Math.floor(currentTime % 60); // Convertendo para Segundos
-    if (currentSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
+    // Update the current playback time
+    let currentMinutes = Math.floor(currentTime / 60); // Convert to minutes
+    let currentSeconds = Math.floor(currentTime % 60); // Convert to seconds
+    if (currentSeconds < 10) { // add a leading 0 if seconds < 10
         currentSeconds = `0${currentSeconds}`;
     }
 
-    // Exibição dos minutos e segundos atuais da música
+    // Show the current minutes and seconds
     musicCurrentTime.innerText = `${currentMinutes}:${currentSeconds}`;
 });
 
-// Atualiza a duração total assim que os dados da música carregam (registrado UMA vez)
+// Update the total duration once the song data loads (registered ONCE)
 mainAudio.addEventListener("loadeddata", () => {
     let musicDuration = wrapper.querySelector(".duration");
     let audioDuration = mainAudio.duration;
-    let totalMinutes = Math.floor(audioDuration / 60); // Convertendo para Minutos
-    let totalSeconds = Math.floor(audioDuration % 60); // Convertendo para Segundos
-    if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
+    let totalMinutes = Math.floor(audioDuration / 60); // Convert to minutes
+    let totalSeconds = Math.floor(audioDuration % 60); // Convert to seconds
+    if (totalSeconds < 10) { // add a leading 0 if seconds < 10
         totalSeconds = `0${totalSeconds}`;
     }
 
-    // Exibição dos minutos e segundos totais da música
+    // Show the total minutes and seconds
     musicDuration.innerText = `${totalMinutes}:${totalSeconds}`;
 });
 
-// Atualiza a reprodução da música com a hora atual de acordo com a largura da barrinha de progresso
+// Seek the song based on where the progress bar was clicked
 progressArea.addEventListener("click", (e) => {
-    let progressWidthval = progressArea.clientWidth; // Obtém a largura da barrinha de progresso
-    let clickedOffSetX = e.offsetX; // Valor de deslocamento
-    let songDuration = mainAudio.duration; // Duração total da música
+    let progressWidthval = progressArea.clientWidth; // Progress bar width
+    let clickedOffSetX = e.offsetX; // Click offset
+    let songDuration = mainAudio.duration; // Total song duration
 
     mainAudio.currentTime = (clickedOffSetX / progressWidthval) * songDuration;
     playMusic();
 });
 
-// Botão de Repetir e Aleatório
+// Repeat / Shuffle button
 const repeatButton = wrapper.querySelector("#repeat-plist");
 repeatButton.addEventListener("click", () => {
-    let getText = repeatButton.innerText; // Obtém innerText do ícone
+    let getText = repeatButton.innerText; // Get the icon's innerText
 
     switch (getText) {
-        case "repeat": // Caso o ícone seja repeat, mudar para repeat_one
+        case "repeat": // If icon is repeat, switch to repeat_one
             repeatButton.innerText = "repeat_one";
             repeatButton.setAttribute("title", "Song Looped");
             break;
-        case "repeat_one": // Caso o ícone seja reppeat_one, mudar para shuffle
+        case "repeat_one": // If icon is repeat_one, switch to shuffle
             repeatButton.innerText = "shuffle";
             repeatButton.setAttribute("title", "Playback Shuffle");
             break;
-        case "shuffle": // Caso o ícone seja shuffle, mudar para repeat
+        case "shuffle": // If icon is shuffle, switch to repeat
             repeatButton.innerText = "repeat";
             repeatButton.setAttribute("title", "Playlist Loop");
             break;
     }
 });
 
-// Função Exibir e Fechar Playlist
+// Show / hide the playlist
 showMoreButton.addEventListener("click", () => {
     musicList.classList.toggle("show");
 });
@@ -196,14 +195,14 @@ hideMusicButton.addEventListener("click", () => {
     showMoreButton.click();
 });
 
-// Cria <li> de acordo com o comprimento do array (Exibindo a Lista de Música)
+// Build the <li> for the playlist (tomorrow's song preview)
 let nextMusicTomorrow;
 if (today == 6) {
     nextMusicTomorrow = 0;
 } else {
     nextMusicTomorrow = today + 1;
 }
-// Passando o nome da música e artista do array para a li
+// Pass the song name and artist from the array into the li
 let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}" li-index="${nextMusicTomorrow}">
                 <div class="row">
                     <span>${allMusic[nextMusicTomorrow].name}</span>
@@ -221,26 +220,26 @@ liAudioTag.addEventListener("loadeddata", () => {
     let audioDuration = liAudioTag.duration;
     let totalMinutes = Math.floor(audioDuration / 60);
     let totalSeconds = Math.floor(audioDuration % 60);
-    if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
+    if (totalSeconds < 10) { // add a leading 0 if seconds < 10
         totalSeconds = `0${totalSeconds}`;
     }
     liAudioDuration.innerText = `${totalMinutes}:${totalSeconds}`;
     liAudioDuration.setAttribute("t-duration", `${totalMinutes}:${totalSeconds}`);
 });
 
-// O item da lista é uma prévia da música de amanhã, mas — como é uma música por
-// dia — ativá-lo apenas reinicia a faixa do dia, igual aos botões next/prev.
+// The list item previews tomorrow's song, but — since it's one song per
+// day — activating it just restarts the day's song, like the next/prev buttons.
 const tomorrowLi = ulTag.querySelector("li");
 tomorrowLi.setAttribute("role", "button");
 tomorrowLi.setAttribute("tabindex", "0");
-tomorrowLi.setAttribute("aria-label", "Tocar a música de hoje");
+tomorrowLi.setAttribute("aria-label", "Play today's song");
 tomorrowLi.addEventListener("click", replayCurrentMusic);
 
 // Dark Mode
 const darkMode = document.querySelector('.dark-mode'),
     body = document.querySelector('.page');
 
-// Mantém o aria-pressed do toggle em sincronia com o estado do tema (a11y)
+// Keep the toggle's aria-pressed in sync with the theme state (a11y)
 function syncDarkModePressed() {
     darkMode.setAttribute('aria-pressed', body.classList.contains('is-dark'));
 }
@@ -250,16 +249,16 @@ darkMode.onclick = () => {
     syncDarkModePressed();
 }
 
-// Verifica a preferência de cor do usuário
+// Check the user's color preference
 const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-// Aplica a classe 'is-dark' se a preferência for pelo modo escuro
+// Apply the 'is-dark' class if the preference is for dark mode
 if (userPrefersDark) {
     body.classList.add('is-dark');
 }
-syncDarkModePressed(); // Estado inicial
+syncDarkModePressed(); // Initial state
 
-// Adiciona um listener para mudanças na preferência de cor
+// Listen for changes in the color preference
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (e.matches) {
         body.classList.add('is-dark');
@@ -269,8 +268,8 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
     syncDarkModePressed();
 });
 
-// Acessibilidade: aciona com Enter/Espaço qualquer elemento role="button",
-// inclusive os inseridos dinamicamente (delegação no document).
+// Accessibility: activate any role="button" element with Enter/Space,
+// including dynamically inserted ones (event delegation on document).
 document.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     const target = e.target.closest('[role="button"]');
