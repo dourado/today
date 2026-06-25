@@ -92,8 +92,10 @@ function playMusic() {
     wrapper.classList.add("paused");
     playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause</i>";
     playPauseButton.setAttribute("aria-pressed", "true");
-    // Swallow benign rejections (e.g. play interrupted by a quick pause)
-    mainAudio.play().catch(() => {});
+    // Ignore the benign interruption (play cut off by a quick pause); surface the rest
+    mainAudio.play().catch((err) => {
+        if (err.name !== "AbortError") console.warn("Playback failed:", err);
+    });
 }
 
 // Pause
