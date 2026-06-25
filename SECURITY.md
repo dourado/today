@@ -1,21 +1,15 @@
 # Security Policy
 
-## Supported Versions
-
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+**Today** is a small personal, static web project. There is no formal release
+versioning — security fixes are applied to the latest state of the `main` branch.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security issue, please report it privately through GitHub's
+[security advisories](https://github.com/dourado/today/security/advisories/new).
+For non-sensitive issues, you can instead
+[open an issue](https://github.com/dourado/today/issues).
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+You can expect an initial response within a few days. If the report is accepted,
+a fix will be pushed to `main` and the live site redeployed; if it is declined,
+you'll get an explanation of why.

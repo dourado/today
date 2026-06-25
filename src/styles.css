@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +7,7 @@
 
 *::before,
 *::after {
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
@@ -42,7 +41,7 @@ body {
     box-shadow: 0px 0px 15px 15px var(--light-shadow);
 }
 
-.wrapper i {
+[role="button"] {
     cursor: pointer;
 }
 
@@ -58,11 +57,6 @@ body {
 
 .top-bar i {
     font-size: 2.3rem;
-    color: var(--light-black);
-}
-
-.top-bar .bx {
-    font-size: 1.3rem;
     color: var(--light-black);
 }
 
@@ -188,6 +182,14 @@ body {
     color: var(--light-black);
 }
 
+/* Visible focus for keyboard navigation */
+.wrapper [role="button"]:focus-visible,
+.dropdown-content a:focus-visible {
+    outline: 2px solid var(--main-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
 /* Icons Controls */
 .controls {
     margin: 40px 0 5px 0;
@@ -213,6 +215,27 @@ body {
 
 .controls #next {
     margin-left: -13px;
+}
+
+/* Filled (solid) glyphs for the skip and play/pause icons */
+#prev,
+#next,
+.play-pause i {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Loop toggle: keep the accent gradient while active (looping), grey when off.
+   Clear the gradient and set color + -webkit-text-fill-color so the grey shows
+   even where -webkit-text-fill-color is unsupported. */
+#repeat-plist[aria-pressed="false"] {
+    background: none;
+    color: #b8b8b8;
+    -webkit-text-fill-color: #b8b8b8;
+}
+
+.is-dark #repeat-plist[aria-pressed="false"] {
+    color: #5a5a5a;
+    -webkit-text-fill-color: #5a5a5a;
 }
 
 .controls .play-pause {
@@ -255,6 +278,7 @@ body {
     left: 0;
     bottom: -55%;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     padding: 15px 30px;
     border-radius: 15px;
@@ -263,10 +287,11 @@ body {
     transition: all 0.14s ease;
 }
 
-/* Classe Utilizada no JS */
+/* Class used by the JS */
 .music-list.show {
     bottom: 0;
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
 }
 
@@ -342,19 +367,22 @@ ul li.playing {
     text-decoration: none;
 }
 
-.dark-mode .bx {
+.dark-mode i {
     position: absolute;
     top: 50%;
     left: 50%;
+    font-size: 1.3rem;
+    font-variation-settings: 'FILL' 1;
     transform: translate(-50%, -50%);
     transition: .5s;
 }
 
-.bx-moon {
+/* Scoped under .dark-mode so the color beats `.top-bar i`'s specificity */
+.dark-mode .moon-light {
     color: var(--main-color);
 }
 
-.bxs-moon {
+.dark-mode .moon-dark {
     color: var(--white-color);
     opacity: 0;
     visibility: hidden;
@@ -372,17 +400,14 @@ ul li.playing {
     background: #313131;
 }
 
-.is-dark .bx-moon {
+.is-dark .moon-light {
     opacity: 0;
     visibility: hidden;
 }
 
-.is-dark .bxs-moon {
+.is-dark .moon-dark {
     opacity: 1;
     visibility: visible;
-}
-
-.is-dark .bxs-moon {
     color: var(--white-mode);
 }
 
@@ -448,52 +473,8 @@ ul li.playing {
     background: #a09f9f;
 }
 
-/* Adiciona uma media query para dispositivos móveis */
-@media (max-width: 480px) {
-    .wrapper {
-        display: inline-grid;
-        align-items: center;
-        width: 100%;
-        height: 100vh;
-        padding: 20px;
-        padding-bottom: 50px;
-        padding-top: 50px;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-    body {
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 768px) {
-    .wrapper {
-        display: inline-grid;
-        align-items: center;
-        width: 100%;
-        height: 100vh;
-        padding: 20px;
-        padding-bottom: 50px;
-        padding-top: 50px;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-    body {
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Full screen on viewports up to 1024px (mobile and tablets) */
+@media (max-width: 1024px) {
     .wrapper {
         display: inline-grid;
         align-items: center;
@@ -545,5 +526,18 @@ ul li.playing {
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
+    }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
     }
 }

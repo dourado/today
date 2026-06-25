@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" charset="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1">
     <link rel="icon" href="img/coffee.png" type="image/x-icon">
     <title>Golden Today</title>
 </head>
@@ -18,7 +18,8 @@
         <div class="top-bar">
             <div class="dropdown">
                 <div class="row">
-                    <i class="material-icons" id="dropdown-toggle">arrow_drop_down</i>
+                    <i class="material-symbols-rounded" id="dropdown-toggle" role="button" tabindex="0"
+                        aria-label="Open links menu" aria-expanded="false">arrow_drop_down</i>
                 </div>
                 <div class="dropdown-content">
                     <a href="https://github.com/dourado" target="_blank">GitHub</a>
@@ -26,9 +27,9 @@
                 </div>
             </div>
             <span>Today</span>
-            <div class="dark-mode">
-                <i class='bx bx-moon'></i>
-                <i class='bx bxs-moon'></i>
+            <div class="dark-mode" role="button" tabindex="0" aria-label="Toggle dark mode" aria-pressed="false">
+                <i class="material-symbols-rounded moon-light" aria-hidden="true">dark_mode</i>
+                <i class="material-symbols-rounded moon-dark" aria-hidden="true">dark_mode</i>
             </div>
         </div>
         <div class="img-area">
@@ -49,24 +50,25 @@
             <audio id="main-audio" src=""></audio>
         </div>
         <div class="controls">
-            <i id="repeat-plist" class="material-icons" title="Playlist Loop">repeat</i>
-            <i id="prev" class='bx bx-skip-previous'></i>
-            <div class="play-pause">
-                <i class='bx bx-play'></i>
+            <i id="repeat-plist" class="material-symbols-rounded" title="No Loop" role="button" tabindex="0"
+                aria-label="Toggle song loop" aria-pressed="false">repeat</i>
+            <i id="prev" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song">skip_previous</i>
+            <div class="play-pause" role="button" tabindex="0" aria-label="Play or pause" aria-pressed="false">
+                <i class="material-symbols-rounded">play_arrow</i>
             </div>
-            <i id="next" class='bx bx-skip-next'></i>
-            <i id="more-music" class='bx bxs-playlist'></i>
+            <i id="next" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song">skip_next</i>
+            <i id="more-music" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Show playlist" aria-expanded="false">queue_music</i>
         </div>
         <div class="music-list">
             <div class="header">
                 <div class="row">
-                    <i id="more-music" class='bx bxs-playlist'></i>
+                    <i class="material-symbols-rounded" aria-hidden="true">queue_music</i>
                     <span class="title-music">Tomorrow</span>
                 </div>
-                <i id="close" class='bx bx-x'></i>
+                <i id="close" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Close playlist">close</i>
             </div>
             <ul>
-                <!-- Lista de músicas -->
+                <!-- Song list -->
             </ul>
         </div>
     </div>
