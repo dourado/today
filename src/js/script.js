@@ -213,7 +213,7 @@ let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}">
                     <span>${allMusic[nextMusicTomorrow].name}'s Song</span>
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
                 </div>
-                <audio class="${allMusic[nextMusicTomorrow].src}" src="${allMusic[nextMusicTomorrow].src}"></audio>
+                <audio src="${allMusic[nextMusicTomorrow].src}"></audio>
                 <span class="audio-duration">--:--</span>
             </li>`;
 ulTag.insertAdjacentHTML("beforeend", liTag);
