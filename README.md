@@ -21,6 +21,7 @@ Visit the live site at [Golden Today](https://golden-today.vercel.app/)
 ```plaintext
 today/
 ├── .github/
+│   ├── CODEOWNERS
 │   └── dependabot.yml
 ├── src/
 │   ├── audio/              # one track per weekday (sunday.mp3 … saturday.mp3)
