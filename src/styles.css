@@ -350,11 +350,6 @@ ul li .audio-duration {
     font-size: 16px;
 }
 
-ul li.playing {
-    color: var(--main-color);
-    pointer-events: none;
-}
-
 /* Dark Mode Button */
 .dark-mode {
     display: flex;
@@ -364,7 +359,6 @@ ul li.playing {
     background: #f8f8f8;
     border-radius: 50%;
     transition: .5s;
-    text-decoration: none;
 }
 
 .dark-mode i {
@@ -446,10 +440,6 @@ ul li.playing {
 
 .is-dark .music-list ul li {
     color: var(--white-mode);
-}
-
-.is-dark ul li.playing {
-    color: var(--main-color);
 }
 
 .is-dark .row i {
