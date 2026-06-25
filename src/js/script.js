@@ -192,7 +192,8 @@ repeatButton.addEventListener("click", () => {
 
 // Show / hide the playlist
 showMoreButton.addEventListener("click", () => {
-    musicList.classList.toggle("show");
+    const isOpen = musicList.classList.toggle("show");
+    showMoreButton.setAttribute("aria-expanded", isOpen);
 });
 
 hideMusicButton.addEventListener("click", () => {
