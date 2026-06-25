@@ -48,7 +48,7 @@ today/
 
 ## License
 
-[![License: WTFPL](src/img/wtfpl-badge.png)](http://www.wtfpl.net/)
+[![License: WTFPL](src/img/wtfpl-badge.png)](https://www.wtfpl.net/)
 
 Do What The F*ck You Want To Public License — see [LICENSE](LICENSE).
 
