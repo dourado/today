@@ -34,6 +34,7 @@ let musicIndex = today;
 
 window.addEventListener("load", () => {
     loadMusic(musicIndex); // Chama a função loadMusic() quando a janela é carregada
+    fetchDeployStatus();   // Busca o status de deploy do dia (uma vez)
     playingNow();
     mainAudio.loop = true; // Define o looping como padrão
     repeatButton.innerText = "repeat_one"; // Define o texto inicial do botão como "repeat_one"
@@ -46,13 +47,17 @@ function loadMusic(indexNumb) {
     musicName.innerText = allMusic[indexNumb].name;
     musicArtist.innerText = allMusic[indexNumb].artist;
     mainAudio.src = allMusic[indexNumb].src;
+}
+
+// Busca o status de deploy do dia e atualiza a mensagem + as cores da UI
+function fetchDeployStatus() {
+    const messageElement = document.getElementById('message');
 
     fetch('https://shouldideploy.today/api?tz=America/Sao_Paulo')
         .then(response => response.json())
         .then(data => {
             const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
             const message = data.message;
-            const messageElement = document.getElementById('message');
             messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>${shouldDeploy}</b><br>"${message}"`;
 
             // Change background color based on shouldideploy value
@@ -64,6 +69,10 @@ function loadMusic(indexNumb) {
                 document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Red for NO
                 document.querySelector('body').style.backgroundColor = '#ff5555'; // Red for NO
             }
+        })
+        .catch(() => {
+            // Falha de rede / API fora do ar: não deixa a UI vazia
+            messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>?</b><br>"Não foi possível consultar agora."`;
         });
 }
 
@@ -81,16 +90,20 @@ function pauseMusic() {
     mainAudio.pause();
 }
 
-// Função Next (Próximo)
-function nextMusic() {
-    // Incrementa +1 no index da música
-    musicIndex++;
-    // Se musicIndex for maior do que o comprimento do total de músicas, então a musicIndex voltará para a primeira música
-    musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
-    loadMusic(musicIndex);
+// Como é uma música por dia, next/prev não trocam de faixa:
+// apenas reiniciam a música do dia do começo.
+function replayCurrentMusic() {
+    mainAudio.currentTime = 0;
     playMusic();
     playingNow();
 }
+
+// Botões Próximo / Anterior — reiniciam a faixa do dia
+const prevButton = wrapper.querySelector("#prev"),
+    nextButton = wrapper.querySelector("#next");
+
+prevButton.addEventListener("click", replayCurrentMusic);
+nextButton.addEventListener("click", replayCurrentMusic);
 
 // Arrow Function (Funções de seta que permitem escrever uma sintaxe de função mais curta)
 // Botão Play
@@ -110,21 +123,7 @@ mainAudio.addEventListener("timeupdate", (e) => {
     let progressWidth = (currentTime / duration) * 100;
     progressBar.style.width = `${progressWidth}%`;
 
-    let musicCurrentTime = wrapper.querySelector(".current"),
-        musicDuration = wrapper.querySelector(".duration");
-
-    mainAudio.addEventListener("loadeddata", () => {
-        // Atualiza a duração total da música
-        let audioDuration = mainAudio.duration;
-        let totalMinutes = Math.floor(audioDuration / 60); // Convertendo para Minutos
-        let totalSeconds = Math.floor(audioDuration % 60); // Convertendo para Segundos
-        if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
-            totalSeconds = `0${totalSeconds}`;
-        }
-
-        // Exibição dos minutos e segundos totais da música
-        musicDuration.innerText = `${totalMinutes}:${totalSeconds}`;
-    });
+    let musicCurrentTime = wrapper.querySelector(".current");
 
     // Atualiza a reprodução da música com a hora atual
     let currentMinutes = Math.floor(currentTime / 60); // Convertendo para Minutos
@@ -135,6 +134,20 @@ mainAudio.addEventListener("timeupdate", (e) => {
 
     // Exibição dos minutos e segundos atuais da música
     musicCurrentTime.innerText = `${currentMinutes}:${currentSeconds}`;
+});
+
+// Atualiza a duração total assim que os dados da música carregam (registrado UMA vez)
+mainAudio.addEventListener("loadeddata", () => {
+    let musicDuration = wrapper.querySelector(".duration");
+    let audioDuration = mainAudio.duration;
+    let totalMinutes = Math.floor(audioDuration / 60); // Convertendo para Minutos
+    let totalSeconds = Math.floor(audioDuration % 60); // Convertendo para Segundos
+    if (totalSeconds < 10) { // adiciona 0 se os segundos forem menor que 10
+        totalSeconds = `0${totalSeconds}`;
+    }
+
+    // Exibição dos minutos e segundos totais da música
+    musicDuration.innerText = `${totalMinutes}:${totalSeconds}`;
 });
 
 // Atualiza a reprodução da música com a hora atual de acordo com a largura da barrinha de progresso
@@ -168,26 +181,10 @@ repeatButton.addEventListener("click", () => {
     }
 });
 
-// Repetindo a música
-mainAudio.addEventListener("ended", () => {
-    let getText = repeatButton.innerText; // Obtém innerText do ícone
-
-    switch (getText) {
-        case "repeat": // Caso este ícone seja repeat, a função nextMusic é chamada para que a próxima música toque
-            break;
-        case "repeat_one": // Caso este ícone seja repeat_one, então a hora atual da música que está tocando muda para 0, retornando ao ínicio
-            mainAudio.currentTime = 0;
-            loadMusic(musicIndex);
-            playMusic();
-            playingNow();
-            break;
-        case "shuffle": // Caso o ícone seja shuffle, mudar para repeat
-            mainAudio.currentTime = 0;
-            loadMusic(musicIndex);
-            playMusic();
-            break;
-    }
-});
+// Como é uma música por dia, ao terminar ela sempre recomeça —
+// independente do ícone estar em repeat / repeat_one / shuffle.
+// (O loop nativo do <audio> já cobre o caso comum; isto é um fallback.)
+mainAudio.addEventListener("ended", replayCurrentMusic);
 
 // Função Exibir e Fechar Playlist
 showMoreButton.addEventListener("click", () => {
@@ -211,7 +208,7 @@ let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}" li-index="${nextM
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
                 </div>
                 <audio class="${allMusic[nextMusicTomorrow].src}" src="${allMusic[nextMusicTomorrow].src}"></audio>
-                <span class="audio-duration">1:37</span>
+                <span class="audio-duration">--:--</span>
             </li>`;
 ulTag.insertAdjacentHTML("beforeend", liTag);
 
