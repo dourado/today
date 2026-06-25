@@ -280,6 +280,7 @@ body {
     left: 0;
     bottom: -55%;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     padding: 15px 30px;
     border-radius: 15px;
@@ -292,6 +293,7 @@ body {
 .music-list.show {
     bottom: 0;
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
 }
 
