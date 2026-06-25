@@ -77,8 +77,12 @@ function fetchDeployStatus() {
             }
         })
         .catch(() => {
-            // Network failure / API down: don't leave the UI empty
+            // Network failure / API down: show a visible, neutral fallback (the
+            // message would otherwise be white text on no background)
             renderDeployMessage(messageElement, '?', "Couldn't check right now.");
+            document.querySelector('.img-area').style.backgroundColor = '#515c6f'; // Neutral slate
+            document.querySelector('.text-area').style.color = '#fff';
+            document.querySelector('body').style.backgroundColor = '#515c6f';
         });
 }
 
