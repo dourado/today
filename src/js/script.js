@@ -253,18 +253,18 @@ darkMode.onclick = () => {
     syncDarkModePressed();
 }
 
-// Check the user's color preference
-const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+// Cache the prefers-color-scheme query (may be absent in older browsers)
+const darkModeQuery = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 
 // Apply the 'is-dark' class if the preference is for dark mode
-if (userPrefersDark) {
+if (darkModeQuery && darkModeQuery.matches) {
     body.classList.add('is-dark');
 }
 syncDarkModePressed(); // Initial state
 
-// Listen for changes in the color preference (guard matchMedia for older browsers)
-if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+// Listen for changes in the color preference
+if (darkModeQuery) {
+    darkModeQuery.addEventListener('change', e => {
         if (e.matches) {
             body.classList.add('is-dark');
         } else {
