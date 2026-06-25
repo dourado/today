@@ -224,9 +224,13 @@ body {
     margin-left: -13px;
 }
 
-/* Loop toggle: fill the glyph while it's active (looping) */
-#repeat-plist[aria-pressed="true"] {
-    font-variation-settings: 'FILL' 1;
+/* Loop toggle: keep the accent gradient while active (looping), grey when off */
+#repeat-plist[aria-pressed="false"] {
+    -webkit-text-fill-color: #b8b8b8;
+}
+
+.is-dark #repeat-plist[aria-pressed="false"] {
+    -webkit-text-fill-color: #5a5a5a;
 }
 
 .controls .play-pause {

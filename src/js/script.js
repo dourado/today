@@ -173,13 +173,13 @@ progressArea.addEventListener("click", (e) => {
     playMusic();
 });
 
-// Loop toggle: two states only — repeat_one (loop the day's song) and
-// no_loop (the default). Reflects state on the icon, title and aria-pressed.
+// Loop toggle: two states — looping the day's song or not (no_loop is the
+// default). The single `repeat` glyph is colored when active and greyed when
+// off (driven by aria-pressed in CSS).
 const repeatButton = wrapper.querySelector("#repeat-plist");
 
 function setLoopState(loopOn) {
     mainAudio.loop = loopOn;
-    repeatButton.innerText = loopOn ? "repeat_one" : "repeat"; // distinct glyphs
     repeatButton.setAttribute("aria-pressed", loopOn);
     repeatButton.setAttribute("title", loopOn ? "Song Looped" : "No Loop");
 }
