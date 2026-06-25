@@ -219,6 +219,13 @@ body {
     margin-left: -13px;
 }
 
+/* Filled (solid) glyphs for the skip and play/pause icons */
+#prev,
+#next,
+.play-pause i {
+    font-variation-settings: 'FILL' 1;
+}
+
 /* Loop toggle: keep the accent gradient while active (looping), grey when off */
 #repeat-plist[aria-pressed="false"] {
     -webkit-text-fill-color: #b8b8b8;
