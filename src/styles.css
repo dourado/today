@@ -360,6 +360,7 @@ ul li.playing {
     top: 50%;
     left: 50%;
     font-size: 1.3rem;
+    font-variation-settings: 'FILL' 1;
     transform: translate(-50%, -50%);
     transition: .5s;
 }
