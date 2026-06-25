@@ -284,3 +284,13 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
         body.classList.remove('is-dark');
     }
 });
+
+// Acessibilidade: permite acionar com Enter/Espaço os ícones marcados como botão
+document.querySelectorAll('[role="button"]').forEach(el => {
+    el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            el.click();
+        }
+    });
+});

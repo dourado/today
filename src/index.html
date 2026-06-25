@@ -18,7 +18,8 @@
         <div class="top-bar">
             <div class="dropdown">
                 <div class="row">
-                    <i class="material-icons" id="dropdown-toggle">arrow_drop_down</i>
+                    <i class="material-icons" id="dropdown-toggle" role="button" tabindex="0"
+                        aria-label="Abrir menu de links">arrow_drop_down</i>
                 </div>
                 <div class="dropdown-content">
                     <a href="https://github.com/dourado" target="_blank">GitHub</a>
@@ -26,7 +27,7 @@
                 </div>
             </div>
             <span>Today</span>
-            <div class="dark-mode">
+            <div class="dark-mode" role="button" tabindex="0" aria-label="Alternar modo escuro">
                 <i class='bx bx-moon'></i>
                 <i class='bx bxs-moon'></i>
             </div>
@@ -49,21 +50,22 @@
             <audio id="main-audio" src=""></audio>
         </div>
         <div class="controls">
-            <i id="repeat-plist" class="material-icons" title="Playlist Loop">repeat</i>
-            <i id="prev" class='bx bx-skip-previous'></i>
-            <div class="play-pause">
+            <i id="repeat-plist" class="material-icons" title="Playlist Loop" role="button" tabindex="0"
+                aria-label="Modo de repetição">repeat</i>
+            <i id="prev" class='bx bx-skip-previous' role="button" tabindex="0" aria-label="Reiniciar música"></i>
+            <div class="play-pause" role="button" tabindex="0" aria-label="Tocar ou pausar">
                 <i class='bx bx-play'></i>
             </div>
-            <i id="next" class='bx bx-skip-next'></i>
-            <i id="more-music" class='bx bxs-playlist'></i>
+            <i id="next" class='bx bx-skip-next' role="button" tabindex="0" aria-label="Reiniciar música"></i>
+            <i id="more-music" class='bx bxs-playlist' role="button" tabindex="0" aria-label="Mostrar playlist"></i>
         </div>
         <div class="music-list">
             <div class="header">
                 <div class="row">
-                    <i class='bx bxs-playlist'></i>
+                    <i class='bx bxs-playlist' aria-hidden="true"></i>
                     <span class="title-music">Tomorrow</span>
                 </div>
-                <i id="close" class='bx bx-x'></i>
+                <i id="close" class='bx bx-x' role="button" tabindex="0" aria-label="Fechar playlist"></i>
             </div>
             <ul>
                 <!-- Lista de músicas -->
