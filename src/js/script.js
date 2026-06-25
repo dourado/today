@@ -209,7 +209,7 @@ if (today == 6) {
 // Pass the song name and artist from the array into the li
 let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}" li-index="${nextMusicTomorrow}">
                 <div class="row">
-                    <span>${allMusic[nextMusicTomorrow].name}</span>
+                    <span>${allMusic[nextMusicTomorrow].name}'s Song</span>
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
                 </div>
                 <audio class="${allMusic[nextMusicTomorrow].src}" src="${allMusic[nextMusicTomorrow].src}"></audio>
