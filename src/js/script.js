@@ -179,8 +179,7 @@ const repeatButton = wrapper.querySelector("#repeat-plist");
 
 function setLoopState(loopOn) {
     mainAudio.loop = loopOn;
-    repeatButton.innerText = "repeat_one";
-    repeatButton.classList.toggle("inactive", !loopOn); // dim when no loop
+    repeatButton.innerText = loopOn ? "repeat_one" : "repeat"; // distinct glyphs
     repeatButton.setAttribute("aria-pressed", loopOn);
     repeatButton.setAttribute("title", loopOn ? "Song Looped" : "No Loop");
 }
