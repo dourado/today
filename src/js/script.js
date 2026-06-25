@@ -91,6 +91,7 @@ function fetchDeployStatus() {
 function playMusic() {
     wrapper.classList.add("paused");
     playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause</i>";
+    playPauseButton.setAttribute("aria-pressed", "true");
     mainAudio.play();
 }
 
@@ -98,6 +99,7 @@ function playMusic() {
 function pauseMusic() {
     wrapper.classList.remove("paused");
     playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_arrow</i>";
+    playPauseButton.setAttribute("aria-pressed", "false");
     mainAudio.pause();
 }
 
