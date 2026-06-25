@@ -1,6 +1,5 @@
 // Select all the required tags / elements
 const wrapper = document.querySelector(".wrapper"),
-    musicImage = wrapper.querySelector(".img-area img"),
     musicName = wrapper.querySelector(".song-details .name"),
     musicArtist = wrapper.querySelector(".song-details .artist"),
     mainAudio = wrapper.querySelector("#main-audio"),
