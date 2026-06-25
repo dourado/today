@@ -161,6 +161,13 @@ mainAudio.addEventListener("loadeddata", () => {
     musicDuration.innerText = `${totalMinutes}:${totalSeconds}`;
 });
 
+// When the track ends (only fires with looping off), reset to the start and show
+// the play button — otherwise the UI stays stuck in the "playing" state.
+mainAudio.addEventListener("ended", () => {
+    if (mainAudio.readyState > 0) mainAudio.currentTime = 0;
+    pauseMusic();
+});
+
 // Seek the song based on where the progress bar was clicked
 progressArea.addEventListener("click", (e) => {
     let progressWidthval = progressArea.clientWidth; // Progress bar width
