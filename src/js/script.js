@@ -169,7 +169,10 @@ progressArea.addEventListener("click", (e) => {
     let clickedOffSetX = e.offsetX; // Click offset
     let songDuration = mainAudio.duration; // Total song duration
 
-    mainAudio.currentTime = (clickedOffSetX / progressWidthval) * songDuration;
+    // Only seek when duration and width are usable; avoids a NaN/Infinity currentTime.
+    if (isFinite(songDuration) && songDuration > 0 && progressWidthval > 0) {
+        mainAudio.currentTime = (clickedOffSetX / progressWidthval) * songDuration;
+    }
     playMusic();
 });
 
@@ -266,15 +269,17 @@ if (userPrefersDark) {
 }
 syncDarkModePressed(); // Initial state
 
-// Listen for changes in the color preference
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (e.matches) {
-        body.classList.add('is-dark');
-    } else {
-        body.classList.remove('is-dark');
-    }
-    syncDarkModePressed();
-});
+// Listen for changes in the color preference (guard matchMedia for older browsers)
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (e.matches) {
+            body.classList.add('is-dark');
+        } else {
+            body.classList.remove('is-dark');
+        }
+        syncDarkModePressed();
+    });
+}
 
 // Accessibility: activate any role="button" element with Enter/Space,
 // including dynamically inserted ones (event delegation on document).
