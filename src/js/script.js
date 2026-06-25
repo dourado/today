@@ -177,11 +177,6 @@ repeatButton.addEventListener("click", () => {
     }
 });
 
-// Como é uma música por dia, ao terminar ela sempre recomeça —
-// independente do ícone estar em repeat / repeat_one / shuffle.
-// (O loop nativo do <audio> já cobre o caso comum; isto é um fallback.)
-mainAudio.addEventListener("ended", replayCurrentMusic);
-
 // Função Exibir e Fechar Playlist
 showMoreButton.addEventListener("click", () => {
     musicList.classList.toggle("show");
@@ -253,12 +248,12 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
     }
 });
 
-// Acessibilidade: permite acionar com Enter/Espaço os ícones marcados como botão
-document.querySelectorAll('[role="button"]').forEach(el => {
-    el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            el.click();
-        }
-    });
+// Acessibilidade: aciona com Enter/Espaço qualquer elemento role="button",
+// inclusive os inseridos dinamicamente (delegação no document).
+document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const target = e.target.closest('[role="button"]');
+    if (!target) return;
+    e.preventDefault();
+    target.click();
 });
