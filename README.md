@@ -26,13 +26,15 @@ today/
 ├── src/
 │   ├── audio/              # one track per weekday (sunday.mp3 … saturday.mp3)
 │   ├── img/
-│   │   └── coffee.png
+│   │   ├── coffee.png
+│   │   └── wtfpl-badge.png
 │   ├── js/
 │   │   ├── music-list.js   # daily audio file paths
 │   │   ├── script.js       # player, dark mode, accessibility
 │   │   └── site.webmanifest
 │   ├── index.html
 │   └── styles.css
+├── LICENSE
 ├── README.md
 └── SECURITY.md
 ```
@@ -43,6 +45,12 @@ today/
   - `js/music-list.js`: The JavaScript file that contains the daily audio file paths.
   - `index.html`: The main HTML file.
   - `styles.css`: The CSS file that styles the web app and defines the dark mode styles.
+
+## License
+
+[![License: WTFPL](src/img/wtfpl-badge.png)](http://www.wtfpl.net/)
+
+Do What The F*ck You Want To Public License — see [LICENSE](LICENSE).
 
 <br>
 
