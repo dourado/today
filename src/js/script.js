@@ -47,6 +47,16 @@ function loadMusic(indexNumb) {
     mainAudio.src = allMusic[indexNumb].src;
 }
 
+// Monta a mensagem de deploy com estrutura fixa e o texto dinâmico via
+// textContent, evitando injeção de HTML caso a API retorne marcação (XSS).
+function renderDeployMessage(el, answer, quote) {
+    el.replaceChildren();
+    el.append("SHOULD I DEPLOY TODAY? ");
+    const strong = document.createElement("b");
+    strong.textContent = answer;
+    el.append(strong, document.createElement("br"), `"${quote}"`);
+}
+
 // Busca o status de deploy do dia e atualiza a mensagem + as cores da UI
 function fetchDeployStatus() {
     const messageElement = document.getElementById('message');
@@ -56,7 +66,7 @@ function fetchDeployStatus() {
         .then(data => {
             const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
             const message = data.message;
-            messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>${shouldDeploy}</b><br>"${message}"`;
+            renderDeployMessage(messageElement, shouldDeploy, message);
 
             // Change background color based on shouldideploy value
             if (data.shouldideploy) {
@@ -70,7 +80,7 @@ function fetchDeployStatus() {
         })
         .catch(() => {
             // Falha de rede / API fora do ar: não deixa a UI vazia
-            messageElement.innerHTML = `SHOULD I DEPLOY TODAY? <b>?</b><br>"Não foi possível consultar agora."`;
+            renderDeployMessage(messageElement, '?', 'Não foi possível consultar agora.');
         });
 }
 
