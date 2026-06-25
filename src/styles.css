@@ -377,11 +377,12 @@ ul li.playing {
     transition: .5s;
 }
 
-.moon-light {
+/* Scoped under .dark-mode so the color beats `.top-bar i`'s specificity */
+.dark-mode .moon-light {
     color: var(--main-color);
 }
 
-.moon-dark {
+.dark-mode .moon-dark {
     color: var(--white-color);
     opacity: 0;
     visibility: hidden;
