@@ -326,7 +326,7 @@ body {
     position: relative;
 }
 
-/* Transparent <button> overlay that makes the whole row activable and
+/* Transparent <button> overlay that makes the whole row activatable and
    keyboard-focusable without changing how the row looks. */
 .li-play {
     position: absolute;

@@ -250,8 +250,9 @@ liAudioTag.addEventListener("loadedmetadata", () => {
 // The list item previews tomorrow's song, but — since it's one song per
 // day — activating it just restarts the day's song, like the next/prev buttons.
 const tomorrowLi = ulTag.querySelector("li");
-// An <li> can't carry role="button", so the action is a real <button> overlaid
-// on the row — the whole item stays clickable with no visual change.
+// An <li> isn't natively interactive (no built-in focus/keyboard behavior), so
+// the action is a real <button> overlaid on the row — the whole item stays
+// clickable with no visual change.
 const tomorrowPlay = document.createElement("button");
 tomorrowPlay.type = "button";
 tomorrowPlay.className = "li-play";
