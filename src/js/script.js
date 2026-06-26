@@ -74,6 +74,7 @@ function fetchDeployStatus() {
                 document.querySelector('body').style.backgroundColor = '#50fa7b';
             } else {
                 document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Dracula red (NO)
+                document.querySelector('.text-area').style.color = '#f8f8f2'; // light text on red
                 document.querySelector('body').style.backgroundColor = '#ff5555';
             }
         })

@@ -15,7 +15,7 @@
 :root {
     /* Alucard (Dracula light) */
     --main-color: #A3144D;      /* pink accent */
-    --secundary-color: #644AC9; /* purple accent */
+    --secondary-color: #644AC9; /* purple accent */
     --light-black: #1F1F1F;     /* primary text (foreground) */
     --white-color: #FFFBEB;     /* card / surface (background) */
     --dark-white: #CFCFDE;      /* subtle surfaces / borders (selection) */
@@ -29,6 +29,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background: var(--white-color);
     transition: .5s;
 }
 
@@ -152,7 +153,7 @@ body {
     height: inherit;
     position: relative;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--main-color) 0%, var(--secundary-color) 100%);
+    background: linear-gradient(90deg, var(--main-color) 0%, var(--secondary-color) 100%);
 }
 
 .progress-bar::before {
@@ -353,7 +354,7 @@ ul li .audio-duration {
 .is-dark {
     /* Dracula (dark) — override the accent + muted tokens */
     --main-color: #FF79C6;      /* pink accent */
-    --secundary-color: #BD93F9; /* purple accent */
+    --secondary-color: #BD93F9; /* purple accent */
     --muted: #6272A4;           /* comment */
     --dark-white: #44475A;      /* subtle surfaces / borders (selection) */
     background: #282A36;
@@ -361,10 +362,6 @@ ul li .audio-duration {
 
 .is-dark .wrapper {
     background: #282A36;
-}
-
-.is-dark .dark-mode {
-    background: #44475A;
 }
 
 .is-dark .moon-light {
@@ -388,10 +385,6 @@ ul li .audio-duration {
 
 .is-dark .song-details {
     color: var(--white-mode);
-}
-
-.is-dark .progress-area {
-    background: #44475A;
 }
 
 .is-dark .progress-area span {
@@ -426,10 +419,6 @@ ul li .audio-duration {
 
 .is-dark .dropdown-content a {
     color: var(--white-mode);
-}
-
-.is-dark .dropdown-content a:hover {
-    background: #44475A;
 }
 
 /* Full screen on viewports up to 1024px (mobile and tablets) */
