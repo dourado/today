@@ -374,7 +374,7 @@ ul li .audio-duration {
 }
 
 /* Timer muted in dark, but lightened to meet WCAG AA (4.5:1) on the surface */
-.is-dark .progress-area span {
+.is-dark .timer span {
     color: #8b95c4;
 }
 
