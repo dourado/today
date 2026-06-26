@@ -22,7 +22,6 @@
     --dark-white: #CFCFDE;      /* subtle surfaces / borders (selection) */
     --muted: #6C664B;           /* muted text (comment) */
     --light-shadow: rgba(0, 0, 0, 0.15);
-    --white-mode: #F8F8F2;      /* dark-mode text (Dracula foreground) */
 }
 
 body {
@@ -119,7 +118,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white-color);
+    color: #f8f8f2;
     font-size: 20px;
     text-align: center;
 }
@@ -347,25 +346,23 @@ ul li .audio-duration {
 }
 
 .dark-mode .moon-dark {
-    color: var(--white-color);
+    color: var(--light-black);
     opacity: 0;
     visibility: hidden;
 }
 
 .is-dark {
-    /* Dracula (dark) — override the accent + muted tokens */
+    /* Dracula (dark) — override the theme tokens; component styles follow */
     --main-color: #FF79C6;      /* pink accent */
     --secondary-color: #BD93F9; /* purple accent */
     --control-color: var(--main-color); /* controls stay pink in Dracula */
     --muted: #6272A4;           /* comment */
     --dark-white: #44475A;      /* subtle surfaces / borders (selection) */
-    background: #282A36;
+    --white-color: #282A36;     /* surface (background) */
+    --light-black: #F8F8F2;     /* primary text (foreground) */
 }
 
-.is-dark .wrapper {
-    background: #282A36;
-}
-
+/* Dark-mode moon crossfade — visibility only; colors follow the tokens */
 .is-dark .moon-light {
     opacity: 0;
     visibility: hidden;
@@ -374,53 +371,11 @@ ul li .audio-duration {
 .is-dark .moon-dark {
     opacity: 1;
     visibility: visible;
-    color: var(--white-mode);
 }
 
-.is-dark .top-bar i {
-    color: var(--white-mode);
-}
-
-.is-dark .top-bar span {
-    color: var(--white-mode);
-}
-
-.is-dark .song-details {
-    color: var(--white-mode);
-}
-
+/* Timer stays muted in dark */
 .is-dark .progress-area span {
     color: var(--muted);
-}
-
-.is-dark .music-list {
-    color: var(--white-mode);
-    background: #282A36;
-}
-
-.is-dark .header #close {
-    color: var(--white-mode);
-}
-
-.is-dark .music-list ul li {
-    color: var(--white-mode);
-}
-
-.is-dark .row i {
-    color: var(--white-mode);
-}
-
-.is-dark .row .title-music {
-    color: var(--white-mode);
-}
-
-.is-dark .dropdown-content {
-    color: var(--white-mode);
-    background: #282A36;
-}
-
-.is-dark .dropdown-content a {
-    color: var(--white-mode);
 }
 
 /* Full screen on viewports up to 1024px (mobile and tablets) */
