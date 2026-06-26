@@ -28,9 +28,9 @@ jobs:
   sprite:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
 
@@ -40,7 +40,7 @@ jobs:
       # Feature-branch push: commit the regenerated sprite back to the branch.
       - name: Commit sprite to the branch
         if: github.event_name == 'push'
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore(icons): regenerate inline SVG sprite"
           file_pattern: src/index.html
@@ -48,7 +48,7 @@ jobs:
       # Manual / scheduled: open a PR instead (default branch is protected).
       - name: Open PR with the refreshed sprite
         if: github.event_name != 'push'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: icons/sync-sprite
           title: "chore(icons): sync inline SVG sprite"
