@@ -6,8 +6,10 @@
 // 1 = filled). To swap an icon, change its "name"/"fill" here and regenerate —
 // the id stays, so the HTML never needs editing.
 //
-// The drawings are fetched once from the pinned Material Symbols package on
-// jsDelivr and inlined as <symbol>s; the deployed site ships zero icon requests.
+// The drawings are fetched from the Material Symbols package on jsDelivr
+// (latest, unless icons.config.json pins a version in "package"; the weekly
+// workflow refreshes them and opens a PR on drift) and inlined as <symbol>s;
+// the deployed site ships zero icon requests.
 //
 // Usage: node scripts/build-icons.mjs
 
