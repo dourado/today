@@ -5,7 +5,7 @@
 
 ## How to Run
 
-Visit the live site at [Golden Today](https://golden-today.vercel.app/)
+Visit the live site at [Golden Today](https://shouldideploytodaygolden.vercel.app/)
 
 ## Features
 
