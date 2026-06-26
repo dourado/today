@@ -69,21 +69,21 @@ function fetchDeployStatus() {
 
             // Change background color based on shouldideploy value
             if (data.shouldideploy) {
-                document.querySelector('.img-area').style.backgroundColor = '#50fa7b'; // Green for YES
-                document.querySelector('.text-area').style.color = '#515c6f'; // Green for YES
-                document.querySelector('body').style.backgroundColor = '#50fa7b'; // Green for YES
+                document.querySelector('.img-area').style.backgroundColor = '#50fa7b'; // Dracula green (YES)
+                document.querySelector('.text-area').style.color = '#282a36'; // Dracula bg — dark text on green
+                document.querySelector('body').style.backgroundColor = '#50fa7b';
             } else {
-                document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Red for NO
-                document.querySelector('body').style.backgroundColor = '#ff5555'; // Red for NO
+                document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Dracula red (NO)
+                document.querySelector('body').style.backgroundColor = '#ff5555';
             }
         })
         .catch(() => {
             // Network failure / API down: show a visible, neutral fallback (the
             // message would otherwise be white text on no background)
             renderDeployMessage(messageElement, '?', "Couldn't check right now.");
-            document.querySelector('.img-area').style.backgroundColor = '#515c6f'; // Neutral slate
-            document.querySelector('.text-area').style.color = '#fff';
-            document.querySelector('body').style.backgroundColor = '#515c6f';
+            document.querySelector('.img-area').style.backgroundColor = '#6272a4'; // Dracula comment (neutral)
+            document.querySelector('.text-area').style.color = '#f8f8f2';
+            document.querySelector('body').style.backgroundColor = '#6272a4';
         });
 }
 

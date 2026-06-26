@@ -13,14 +13,15 @@
 }
 
 :root {
-    --main-color: #ff74a4;
-    --secundary-color: #9f6ea3;
-    --light-black: #515c6f;
-    --white-color: #fff;
-    --dark-white: #cecaca;
-    --main-shadow: #ffcbdd;
+    /* Alucard (Dracula light) */
+    --main-color: #A3144D;      /* pink accent */
+    --secundary-color: #644AC9; /* purple accent */
+    --light-black: #1F1F1F;     /* primary text (foreground) */
+    --white-color: #FFFBEB;     /* card / surface (background) */
+    --dark-white: #CFCFDE;      /* subtle surfaces / borders (selection) */
+    --muted: #6C664B;           /* muted text (comment) */
     --light-shadow: rgba(0, 0, 0, 0.15);
-    --white-mode: #e6e6e6;
+    --white-mode: #F8F8F2;      /* dark-mode text (Dracula foreground) */
 }
 
 body {
@@ -85,7 +86,7 @@ body {
 }
 
 .dropdown-content a {
-    color: black;
+    color: var(--light-black);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -93,7 +94,7 @@ body {
 }
 
 .dropdown-content a:hover {
-    background-color: #ddd;
+    background-color: var(--dark-white);
 }
 
 .show-dropdown {
@@ -141,7 +142,7 @@ body {
     width: 100%;
     height: 6px;
 
-    background: #e6e6e6;
+    background: var(--dark-white);
     border-radius: 50px;
     cursor: pointer;
 }
@@ -229,13 +230,8 @@ body {
    even where -webkit-text-fill-color is unsupported. */
 #repeat-plist[aria-pressed="false"] {
     background: none;
-    color: #b8b8b8;
-    -webkit-text-fill-color: #b8b8b8;
-}
-
-.is-dark #repeat-plist[aria-pressed="false"] {
-    color: #5a5a5a;
-    -webkit-text-fill-color: #5a5a5a;
+    color: var(--muted);
+    -webkit-text-fill-color: var(--muted);
 }
 
 .controls .play-pause {
@@ -330,7 +326,7 @@ body {
     padding-bottom: 10px;
     margin-bottom: 5px;
     color: var(--light-black);
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--dark-white);
     cursor: pointer;
 }
 
@@ -356,7 +352,7 @@ ul li .audio-duration {
     width: 40px;
     height: 40px;
     position: relative;
-    background: #f8f8f8;
+    background: var(--dark-white);
     border-radius: 50%;
     transition: .5s;
 }
@@ -383,15 +379,20 @@ ul li .audio-duration {
 }
 
 .is-dark {
-    background: #262627;
+    /* Dracula (dark) — override the accent + muted tokens */
+    --main-color: #FF79C6;      /* pink accent */
+    --secundary-color: #BD93F9; /* purple accent */
+    --muted: #6272A4;           /* comment */
+    --dark-white: #44475A;      /* subtle surfaces / borders (selection) */
+    background: #282A36;
 }
 
 .is-dark .wrapper {
-    background: #2d2d2e;
+    background: #282A36;
 }
 
 .is-dark .dark-mode {
-    background: #313131;
+    background: #44475A;
 }
 
 .is-dark .moon-light {
@@ -418,11 +419,11 @@ ul li .audio-duration {
 }
 
 .is-dark .progress-area {
-    background: #a09f9f;
+    background: #44475A;
 }
 
 .is-dark .progress-area span {
-    color: #a09f9f;
+    color: var(--muted);
 }
 
 .is-dark .controls .play-pause {
@@ -431,7 +432,7 @@ ul li .audio-duration {
 
 .is-dark .music-list {
     color: var(--white-mode);
-    background: #262627;
+    background: #282A36;
 }
 
 .is-dark .header #close {
@@ -452,7 +453,7 @@ ul li .audio-duration {
 
 .is-dark .dropdown-content {
     color: var(--white-mode);
-    background: #262627;
+    background: #282A36;
 }
 
 .is-dark .dropdown-content a {
@@ -460,7 +461,7 @@ ul li .audio-duration {
 }
 
 .is-dark .dropdown-content a:hover {
-    background: #a09f9f;
+    background: #44475A;
 }
 
 /* Full screen on viewports up to 1024px (mobile and tablets) */
