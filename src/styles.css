@@ -12,33 +12,19 @@
     margin: 0;
 }
 
-/* Self-hosted Material Symbols Rounded — subsetted to the icons actually used.
-   Keeps the FILL axis so the filled/outline distinction still works. */
-@font-face {
-    font-family: 'Material Symbols Rounded';
-    font-style: normal;
-    src: url('fonts/material-symbols-rounded-subset.woff2') format('woff2');
-    font-display: block;
-}
-
+/* Inline SVG icons (Material Symbols Rounded). The drawings live in a <symbol>
+   sprite generated into index.html by scripts/build-icons.mjs; each icon is a
+   <svg><use href="#ic-…"></svg>. Sized in em so the existing font-size rules
+   keep controlling each icon, and colored via currentColor. */
 .material-symbols-rounded {
-    font-family: 'Material Symbols Rounded';
-    font-weight: normal;
-    font-style: normal;
     font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
     display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    /* Outline baseline; the subset only carries the FILL axis, so this is the
-       one variation worth pinning. The filled states override it to 'FILL' 1. */
-    font-variation-settings: 'FILL' 0;
-    font-feature-settings: 'liga';
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    flex-shrink: 0;
+    user-select: none;
 }
 
 :root {
@@ -86,7 +72,7 @@ body {
     justify-content: space-between;
 }
 
-.top-bar i {
+.top-bar svg {
     font-size: 2.3rem;
     color: var(--light-black);
 }
@@ -226,14 +212,14 @@ body {
     margin: 40px 0 5px 0;
 }
 
-.controls i {
+.controls > svg {
     font-size: 30px;
     user-select: none;
     color: var(--control-color);
 }
 
-.controls i:nth-child(2),
-.controls i:nth-child(4) {
+.controls > svg:nth-child(2),
+.controls > svg:nth-child(4) {
     font-size: 43px;
 }
 
@@ -243,13 +229,6 @@ body {
 
 .controls #next {
     margin-left: -13px;
-}
-
-/* Filled (solid) glyphs for the skip and play/pause icons */
-#prev,
-#next,
-.play-pause i {
-    font-variation-settings: 'FILL' 1;
 }
 
 /* Loop toggle: accent color while active (looping), muted when off */
@@ -264,9 +243,23 @@ body {
 }
 
 /* Single play_circle / pause_circle glyph — the circle is the button */
-.play-pause i {
+.play-pause svg {
     font-size: 73px;
     color: var(--control-color);
+}
+
+/* Play / pause crossfade — show one glyph at a time based on the playing state
+   (the `paused` class is present on .wrapper while a song plays). */
+.play-pause .icon-pause {
+    display: none;
+}
+
+.wrapper.paused .play-pause .icon-play {
+    display: none;
+}
+
+.wrapper.paused .play-pause .icon-pause {
+    display: inline-block;
 }
 
 /* Music List */
@@ -300,7 +293,7 @@ body {
     color: var(--light-black);
 }
 
-.header .row i {
+.header .row svg {
     cursor: default;
 }
 
@@ -381,12 +374,11 @@ ul li .audio-duration {
     transition: .5s;
 }
 
-.dark-mode i {
+.dark-mode svg {
     position: absolute;
     top: 50%;
     left: 50%;
     font-size: 1.3rem;
-    font-variation-settings: 'FILL' 1;
     transform: translate(-50%, -50%);
     transition: .5s;
 }

@@ -9,19 +9,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="fonts/material-symbols-rounded-subset.woff2" as="font" type="font/woff2" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="img/coffee.png" type="image/x-icon">
     <title>Golden Today</title>
 </head>
 
 <body class="page">
+    <!-- icons:start -->
+    <!-- icons:end -->
     <main class="wrapper">
         <div class="top-bar">
             <div class="dropdown">
                 <div class="row">
-                    <i class="material-symbols-rounded" id="dropdown-toggle" role="button" tabindex="0"
-                        aria-label="Open links menu" aria-expanded="false">arrow_drop_down</i>
+                    <svg class="material-symbols-rounded" id="dropdown-toggle" role="button" tabindex="0"
+                        aria-label="Open links menu" aria-expanded="false"><use href="#ic-dropdown" /></svg>
                 </div>
                 <div class="dropdown-content">
                     <a href="https://github.com/dourado/today" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -30,8 +31,8 @@
             </div>
             <span>Today</span>
             <div class="dark-mode" role="button" tabindex="0" aria-label="Toggle dark mode" aria-pressed="false">
-                <i class="material-symbols-rounded moon-light" aria-hidden="true">dark_mode</i>
-                <i class="material-symbols-rounded moon-dark" aria-hidden="true">dark_mode</i>
+                <svg class="material-symbols-rounded moon-light" aria-hidden="true" focusable="false"><use href="#ic-moon" /></svg>
+                <svg class="material-symbols-rounded moon-dark" aria-hidden="true" focusable="false"><use href="#ic-moon" /></svg>
             </div>
         </div>
         <div class="img-area">
@@ -52,22 +53,23 @@
             <audio id="main-audio" src="" preload="metadata"></audio>
         </div>
         <div class="controls">
-            <i id="repeat-plist" class="material-symbols-rounded" title="No Loop" role="button" tabindex="0"
-                aria-label="Toggle song loop" aria-pressed="false">repeat</i>
-            <i id="prev" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song">skip_previous</i>
+            <svg id="repeat-plist" class="material-symbols-rounded" title="No Loop" role="button" tabindex="0"
+                aria-label="Toggle song loop" aria-pressed="false"><use href="#ic-repeat" /></svg>
+            <svg id="prev" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song"><use href="#ic-prev" /></svg>
             <div class="play-pause" role="button" tabindex="0" aria-label="Play or pause" aria-pressed="false">
-                <i class="material-symbols-rounded">play_circle</i>
+                <svg class="material-symbols-rounded icon-play" aria-hidden="true" focusable="false"><use href="#ic-play" /></svg>
+                <svg class="material-symbols-rounded icon-pause" aria-hidden="true" focusable="false"><use href="#ic-pause" /></svg>
             </div>
-            <i id="next" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song">skip_next</i>
-            <i id="more-music" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Show playlist" aria-expanded="false">queue_music</i>
+            <svg id="next" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Restart song"><use href="#ic-next" /></svg>
+            <svg id="more-music" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Show playlist" aria-expanded="false"><use href="#ic-playlist" /></svg>
         </div>
         <div class="music-list">
             <div class="header">
                 <div class="row">
-                    <i class="material-symbols-rounded" aria-hidden="true">queue_music</i>
+                    <svg class="material-symbols-rounded" aria-hidden="true" focusable="false"><use href="#ic-playlist" /></svg>
                     <span class="title-music">Tomorrow</span>
                 </div>
-                <i id="close" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Close playlist">close</i>
+                <svg id="close" class="material-symbols-rounded" role="button" tabindex="0" aria-label="Close playlist"><use href="#ic-close" /></svg>
             </div>
             <ul>
                 <!-- Song list -->
