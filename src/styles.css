@@ -118,7 +118,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f8f8f2;
+    color: var(--light-black);
     font-size: 20px;
     text-align: center;
 }
