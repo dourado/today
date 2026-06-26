@@ -343,7 +343,7 @@ ul li .audio-duration {
 
 /* Scoped under .dark-mode so the color beats `.top-bar i`'s specificity */
 .dark-mode .moon-light {
-    color: var(--main-color);
+    color: var(--control-color);
 }
 
 .dark-mode .moon-dark {
