@@ -59,38 +59,34 @@ function renderDeployMessage(el, answer, quote) {
 // Fetch the day's deploy status and update the message + UI colors
 function fetchDeployStatus() {
     const messageElement = document.getElementById('message');
+    const imgArea = document.querySelector('.img-area');
+    const textArea = document.querySelector('.text-area');
+
+    // Paint the page + card with the deploy state's color and a readable text color
+    const paint = (bg, textColor) => {
+        imgArea.style.backgroundColor = bg;
+        document.body.style.backgroundColor = bg;
+        textArea.style.color = textColor;
+    };
 
     fetch('https://shouldideploy.today/api?tz=America/Sao_Paulo')
         .then(response => response.json())
         .then(data => {
-            const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
-            const message = data.message;
-            renderDeployMessage(messageElement, shouldDeploy, message);
-
-            // Change background color based on shouldideploy value
-            if (data.shouldideploy) {
-                document.querySelector('.img-area').style.backgroundColor = '#50fa7b'; // Green for YES
-                document.querySelector('.text-area').style.color = '#515c6f'; // Green for YES
-                document.querySelector('body').style.backgroundColor = '#50fa7b'; // Green for YES
-            } else {
-                document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Red for NO
-                document.querySelector('body').style.backgroundColor = '#ff5555'; // Red for NO
-            }
+            renderDeployMessage(messageElement, data.shouldideploy ? 'YES' : 'NO', data.message);
+            // Dracula green (YES) / red (NO); dark text reads well on both
+            paint(data.shouldideploy ? '#50fa7b' : '#ff5555', '#282a36');
         })
         .catch(() => {
-            // Network failure / API down: show a visible, neutral fallback (the
-            // message would otherwise be white text on no background)
+            // Network failure / API down: visible, neutral fallback
             renderDeployMessage(messageElement, '?', "Couldn't check right now.");
-            document.querySelector('.img-area').style.backgroundColor = '#515c6f'; // Neutral slate
-            document.querySelector('.text-area').style.color = '#fff';
-            document.querySelector('body').style.backgroundColor = '#515c6f';
+            paint('#6272a4', '#f8f8f2'); // Dracula comment (neutral)
         });
 }
 
 // Play
 function playMusic() {
     wrapper.classList.add("paused");
-    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause</i>";
+    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause_circle</i>";
     playPauseButton.setAttribute("aria-pressed", "true");
     // play() may not return a promise on very old browsers — guard before .catch
     const playback = mainAudio.play();
@@ -106,7 +102,7 @@ function playMusic() {
 // Pause
 function pauseMusic() {
     wrapper.classList.remove("paused");
-    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_arrow</i>";
+    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_circle</i>";
     playPauseButton.setAttribute("aria-pressed", "false");
     mainAudio.pause();
 }

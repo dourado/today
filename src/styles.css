@@ -13,14 +13,15 @@
 }
 
 :root {
-    --main-color: #ff74a4;
-    --secundary-color: #9f6ea3;
-    --light-black: #515c6f;
-    --white-color: #fff;
-    --dark-white: #cecaca;
-    --main-shadow: #ffcbdd;
+    /* Alucard (Dracula light) */
+    --main-color: #A3144D;      /* pink accent */
+    --secondary-color: #644AC9; /* purple accent */
+    --control-color: var(--secondary-color); /* controls: purple (Alucard) / pink (Dracula) */
+    --light-black: #1F1F1F;     /* primary text (foreground) */
+    --white-color: #FFFBEB;     /* card / surface (background) */
+    --dark-white: #CFCFDE;      /* subtle surfaces / borders (selection) */
+    --muted: #6C664B;           /* muted text (comment) */
     --light-shadow: rgba(0, 0, 0, 0.15);
-    --white-mode: #e6e6e6;
 }
 
 body {
@@ -28,6 +29,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background: var(--white-color);
     transition: .5s;
 }
 
@@ -85,7 +87,7 @@ body {
 }
 
 .dropdown-content a {
-    color: black;
+    color: var(--light-black);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -93,7 +95,7 @@ body {
 }
 
 .dropdown-content a:hover {
-    background-color: #ddd;
+    background-color: var(--dark-white);
 }
 
 .show-dropdown {
@@ -116,7 +118,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white-color);
+    color: var(--light-black);
     font-size: 20px;
     text-align: center;
 }
@@ -141,7 +143,7 @@ body {
     width: 100%;
     height: 6px;
 
-    background: #e6e6e6;
+    background: var(--dark-white);
     border-radius: 50px;
     cursor: pointer;
 }
@@ -151,7 +153,7 @@ body {
     height: inherit;
     position: relative;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--main-color) 0%, var(--secundary-color) 100%);
+    background: linear-gradient(90deg, var(--main-color) 0%, var(--secondary-color) 100%);
 }
 
 .progress-bar::before {
@@ -185,7 +187,7 @@ body {
 /* Visible focus for keyboard navigation */
 .wrapper [role="button"]:focus-visible,
 .dropdown-content a:focus-visible {
-    outline: 2px solid var(--main-color);
+    outline: 2px solid var(--control-color);
     outline-offset: 3px;
     border-radius: 4px;
 }
@@ -198,10 +200,7 @@ body {
 .controls i {
     font-size: 30px;
     user-select: none;
-    background: linear-gradient(var(--main-color) 0%, var(--secundary-color) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--control-color);
 }
 
 .controls i:nth-child(2),
@@ -224,51 +223,21 @@ body {
     font-variation-settings: 'FILL' 1;
 }
 
-/* Loop toggle: keep the accent gradient while active (looping), grey when off.
-   Clear the gradient and set color + -webkit-text-fill-color so the grey shows
-   even where -webkit-text-fill-color is unsupported. */
+/* Loop toggle: accent color while active (looping), muted when off */
 #repeat-plist[aria-pressed="false"] {
-    background: none;
-    color: #b8b8b8;
-    -webkit-text-fill-color: #b8b8b8;
-}
-
-.is-dark #repeat-plist[aria-pressed="false"] {
-    color: #5a5a5a;
-    -webkit-text-fill-color: #5a5a5a;
+    color: var(--muted);
 }
 
 .controls .play-pause {
-    width: 54px;
-    height: 54px;
-    background: linear-gradient(var(--white-color) 0%, var(--dark-white) 100%);
-    box-shadow: 0px 0px 5px var(--main-color);
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.play-pause::before {
-    width: 40px;
-    height: 40px;
-    content: "";
-    position: absolute;
-    border-radius: inherit;
-    background: linear-gradient(var(--main-color) 0%, var(--secundary-color) 100%);
-}
-
+/* Single play_circle / pause_circle glyph — the circle is the button */
 .play-pause i {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    position: relative;
-    background: inherit;
-    border-radius: inherit;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 73px;
+    color: var(--control-color);
 }
 
 /* Music List */
@@ -330,7 +299,7 @@ body {
     padding-bottom: 10px;
     margin-bottom: 5px;
     color: var(--light-black);
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--dark-white);
     cursor: pointer;
 }
 
@@ -356,7 +325,7 @@ ul li .audio-duration {
     width: 40px;
     height: 40px;
     position: relative;
-    background: #f8f8f8;
+    background: var(--dark-white);
     border-radius: 50%;
     transition: .5s;
 }
@@ -373,27 +342,27 @@ ul li .audio-duration {
 
 /* Scoped under .dark-mode so the color beats `.top-bar i`'s specificity */
 .dark-mode .moon-light {
-    color: var(--main-color);
+    color: var(--control-color);
 }
 
 .dark-mode .moon-dark {
-    color: var(--white-color);
+    color: var(--light-black);
     opacity: 0;
     visibility: hidden;
 }
 
 .is-dark {
-    background: #262627;
+    /* Dracula (dark) — override the theme tokens; component styles follow */
+    --main-color: #FF79C6;      /* pink accent */
+    --secondary-color: #BD93F9; /* purple accent */
+    --control-color: var(--main-color); /* controls stay pink in Dracula */
+    --muted: #6272A4;           /* comment */
+    --dark-white: #44475A;      /* subtle surfaces / borders (selection) */
+    --white-color: #282A36;     /* surface (background) */
+    --light-black: #F8F8F2;     /* primary text (foreground) */
 }
 
-.is-dark .wrapper {
-    background: #2d2d2e;
-}
-
-.is-dark .dark-mode {
-    background: #313131;
-}
-
+/* Dark-mode moon crossfade — visibility only; colors follow the tokens */
 .is-dark .moon-light {
     opacity: 0;
     visibility: hidden;
@@ -402,65 +371,11 @@ ul li .audio-duration {
 .is-dark .moon-dark {
     opacity: 1;
     visibility: visible;
-    color: var(--white-mode);
 }
 
-.is-dark .top-bar i {
-    color: var(--white-mode);
-}
-
-.is-dark .top-bar span {
-    color: var(--white-mode);
-}
-
-.is-dark .song-details {
-    color: var(--white-mode);
-}
-
-.is-dark .progress-area {
-    background: #a09f9f;
-}
-
+/* Timer stays muted in dark */
 .is-dark .progress-area span {
-    color: #a09f9f;
-}
-
-.is-dark .controls .play-pause {
-    background: var(--dark-white);
-}
-
-.is-dark .music-list {
-    color: var(--white-mode);
-    background: #262627;
-}
-
-.is-dark .header #close {
-    color: var(--white-mode);
-}
-
-.is-dark .music-list ul li {
-    color: var(--white-mode);
-}
-
-.is-dark .row i {
-    color: var(--white-mode);
-}
-
-.is-dark .row .title-music {
-    color: var(--white-mode);
-}
-
-.is-dark .dropdown-content {
-    color: var(--white-mode);
-    background: #262627;
-}
-
-.is-dark .dropdown-content a {
-    color: var(--white-mode);
-}
-
-.is-dark .dropdown-content a:hover {
-    background: #a09f9f;
+    color: var(--muted);
 }
 
 /* Full screen on viewports up to 1024px (mobile and tablets) */
