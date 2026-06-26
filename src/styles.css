@@ -200,7 +200,7 @@ body {
 .controls i {
     font-size: 30px;
     user-select: none;
-    color: var(--main-color);
+    color: var(--secondary-color);
 }
 
 .controls i:nth-child(2),
@@ -237,7 +237,7 @@ body {
 /* Single play_circle / pause_circle glyph — the circle is the button */
 .play-pause i {
     font-size: 73px;
-    color: var(--main-color);
+    color: var(--secondary-color);
 }
 
 /* Music List */
