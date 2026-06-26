@@ -187,7 +187,7 @@ body {
 /* Visible focus for keyboard navigation */
 .wrapper [role="button"]:focus-visible,
 .dropdown-content a:focus-visible {
-    outline: 2px solid var(--main-color);
+    outline: 2px solid var(--control-color);
     outline-offset: 3px;
     border-radius: 4px;
 }

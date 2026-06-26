@@ -73,8 +73,8 @@ function fetchDeployStatus() {
         .then(response => response.json())
         .then(data => {
             renderDeployMessage(messageElement, data.shouldideploy ? 'YES' : 'NO', data.message);
-            // Dracula green (YES) / red (NO), with a readable text color
-            paint(data.shouldideploy ? '#50fa7b' : '#ff5555', data.shouldideploy ? '#282a36' : '#f8f8f2');
+            // Dracula green (YES) / red (NO); dark text reads well on both
+            paint(data.shouldideploy ? '#50fa7b' : '#ff5555', '#282a36');
         })
         .catch(() => {
             // Network failure / API down: visible, neutral fallback
