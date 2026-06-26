@@ -373,9 +373,9 @@ ul li .audio-duration {
     visibility: visible;
 }
 
-/* Timer stays muted in dark */
+/* Timer muted in dark, but lightened to meet WCAG AA (4.5:1) on the surface */
 .is-dark .progress-area span {
-    color: var(--muted);
+    color: #8b95c4;
 }
 
 /* Full screen on viewports up to 1024px (mobile and tablets) */
