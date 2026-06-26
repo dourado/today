@@ -249,16 +249,16 @@ body {
 }
 
 /* Play / pause crossfade — show one glyph at a time based on the playing state
-   (the `paused` class is present on .wrapper while a song plays). */
+   (the `playing` class is present on .wrapper while a song plays). */
 .play-pause .icon-pause {
     display: none;
 }
 
-.wrapper.paused .play-pause .icon-play {
+.wrapper.playing .play-pause .icon-play {
     display: none;
 }
 
-.wrapper.paused .play-pause .icon-pause {
+.wrapper.playing .play-pause .icon-pause {
     display: inline-block;
 }
 

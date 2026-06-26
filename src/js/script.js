@@ -85,7 +85,7 @@ function fetchDeployStatus() {
 
 // Play
 function playMusic() {
-    wrapper.classList.add("paused");
+    wrapper.classList.add("playing");
     playPauseButton.setAttribute("aria-pressed", "true");
     // play() may not return a promise on very old browsers — guard before .catch
     const playback = mainAudio.play();
@@ -100,7 +100,7 @@ function playMusic() {
 
 // Pause
 function pauseMusic() {
-    wrapper.classList.remove("paused");
+    wrapper.classList.remove("playing");
     playPauseButton.setAttribute("aria-pressed", "false");
     mainAudio.pause();
 }
@@ -124,9 +124,9 @@ nextButton.addEventListener("click", replayCurrentMusic);
 
 // Play / Pause button
 playPauseButton.addEventListener("click", () => {
-    // The "paused" class is present while the song is playing (added in
-    // playMusic, removed in pauseMusic), so it reflects the playing state.
-    const isPlaying = wrapper.classList.contains("paused");
+    // The "playing" class is added in playMusic and removed in pauseMusic,
+    // so it reflects the current playing state.
+    const isPlaying = wrapper.classList.contains("playing");
 
     // If it's playing, pause it; otherwise play.
     isPlaying ? pauseMusic() : playMusic();
