@@ -1,0 +1,15 @@
+{
+  "package": "@material-symbols/svg-400",
+  "style": "rounded",
+  "icons": {
+    "dropdown": { "name": "arrow_drop_down", "fill": 0 },
+    "moon":     { "name": "dark_mode",       "fill": 1 },
+    "repeat":   { "name": "repeat",          "fill": 0 },
+    "prev":     { "name": "skip_previous",   "fill": 1 },
+    "next":     { "name": "skip_next",       "fill": 1 },
+    "play":     { "name": "play_circle",     "fill": 1 },
+    "pause":    { "name": "pause_circle",    "fill": 1 },
+    "playlist": { "name": "queue_music",     "fill": 0 },
+    "close":    { "name": "close",           "fill": 0 }
+  }
+}
