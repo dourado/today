@@ -33,6 +33,9 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
+    /* Outline baseline; the subset only carries the FILL axis, so this is the
+       one variation worth pinning. The filled states override it to 'FILL' 1. */
+    font-variation-settings: 'FILL' 0;
     font-feature-settings: 'liga';
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
