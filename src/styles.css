@@ -228,32 +228,16 @@ body {
 }
 
 .controls .play-pause {
-    width: 54px;
-    height: 54px;
-    background: var(--white-color);
-    box-shadow: 0px 0px 5px var(--main-color);
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.play-pause::before {
-    width: 40px;
-    height: 40px;
-    content: "";
-    position: absolute;
-    border-radius: inherit;
-    background: var(--main-color);
-}
-
+/* Single play_circle / pause_circle glyph — the circle is the button */
 .play-pause i {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    position: relative;
-    color: var(--white-color);
+    font-size: 54px;
+    color: var(--main-color);
+    filter: drop-shadow(0 0 4px var(--main-color));
 }
 
 /* Music List */
@@ -413,10 +397,6 @@ ul li .audio-duration {
 
 .is-dark .progress-area span {
     color: var(--muted);
-}
-
-.is-dark .controls .play-pause {
-    background: var(--dark-white);
 }
 
 .is-dark .music-list {

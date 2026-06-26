@@ -90,7 +90,7 @@ function fetchDeployStatus() {
 // Play
 function playMusic() {
     wrapper.classList.add("paused");
-    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause</i>";
+    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause_circle</i>";
     playPauseButton.setAttribute("aria-pressed", "true");
     // play() may not return a promise on very old browsers — guard before .catch
     const playback = mainAudio.play();
@@ -106,7 +106,7 @@ function playMusic() {
 // Pause
 function pauseMusic() {
     wrapper.classList.remove("paused");
-    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_arrow</i>";
+    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_circle</i>";
     playPauseButton.setAttribute("aria-pressed", "false");
     mainAudio.pause();
 }
