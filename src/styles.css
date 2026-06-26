@@ -16,6 +16,7 @@
     /* Alucard (Dracula light) */
     --main-color: #A3144D;      /* pink accent */
     --secondary-color: #644AC9; /* purple accent */
+    --control-color: var(--secondary-color); /* controls: purple (Alucard) / pink (Dracula) */
     --light-black: #1F1F1F;     /* primary text (foreground) */
     --white-color: #FFFBEB;     /* card / surface (background) */
     --dark-white: #CFCFDE;      /* subtle surfaces / borders (selection) */
@@ -200,7 +201,7 @@ body {
 .controls i {
     font-size: 30px;
     user-select: none;
-    color: var(--secondary-color);
+    color: var(--control-color);
 }
 
 .controls i:nth-child(2),
@@ -237,7 +238,7 @@ body {
 /* Single play_circle / pause_circle glyph — the circle is the button */
 .play-pause i {
     font-size: 73px;
-    color: var(--secondary-color);
+    color: var(--control-color);
 }
 
 /* Music List */
@@ -355,6 +356,7 @@ ul li .audio-duration {
     /* Dracula (dark) — override the accent + muted tokens */
     --main-color: #FF79C6;      /* pink accent */
     --secondary-color: #BD93F9; /* purple accent */
+    --control-color: var(--main-color); /* controls stay pink in Dracula */
     --muted: #6272A4;           /* comment */
     --dark-white: #44475A;      /* subtle surfaces / borders (selection) */
     background: #282A36;
