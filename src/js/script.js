@@ -156,8 +156,8 @@ mainAudio.addEventListener("timeupdate", (e) => {
     currentTimeEl.innerText = `${currentMinutes}:${currentSeconds}`;
 });
 
-// Update the total duration once the song data loads (registered ONCE)
-mainAudio.addEventListener("loadeddata", () => {
+// Update the total duration once the song metadata loads (registered ONCE)
+mainAudio.addEventListener("loadedmetadata", () => {
     let musicDuration = wrapper.querySelector(".duration");
     let audioDuration = mainAudio.duration;
     let totalMinutes = Math.floor(audioDuration / 60); // Convert to minutes
@@ -230,7 +230,7 @@ let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}">
                     <span>${allMusic[nextMusicTomorrow].name}'s Song</span>
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
                 </div>
-                <audio src="${allMusic[nextMusicTomorrow].src}"></audio>
+                <audio src="${allMusic[nextMusicTomorrow].src}" preload="metadata"></audio>
                 <span class="audio-duration">--:--</span>
             </li>`;
 ulTag.insertAdjacentHTML("beforeend", liTag);
@@ -238,7 +238,7 @@ ulTag.insertAdjacentHTML("beforeend", liTag);
 let liAudioTag = ulTag.querySelector(`li[data-src="${allMusic[nextMusicTomorrow].src}"] audio`);
 let liAudioDuration = ulTag.querySelector(`li[data-src="${allMusic[nextMusicTomorrow].src}"] .audio-duration`);
 
-liAudioTag.addEventListener("loadeddata", () => {
+liAudioTag.addEventListener("loadedmetadata", () => {
     let audioDuration = liAudioTag.duration;
     let totalMinutes = Math.floor(audioDuration / 60);
     let totalSeconds = Math.floor(audioDuration % 60);
