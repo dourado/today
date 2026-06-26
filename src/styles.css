@@ -327,6 +327,28 @@ body {
     color: var(--light-black);
     border-bottom: 1px solid var(--dark-white);
     cursor: pointer;
+    position: relative;
+}
+
+/* Transparent <button> overlay that makes the whole row activable and
+   keyboard-focusable without changing how the row looks. */
+.li-play {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.li-play:focus-visible {
+    outline: 2px solid var(--control-color);
+    outline-offset: 3px;
+    border-radius: 4px;
 }
 
 .music-list ul li:last-child {
