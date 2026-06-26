@@ -20,6 +20,10 @@ const HTML = "src/index.html";
 const START = "<!-- icons:start -->";
 const END = "<!-- icons:end -->";
 
+// Config values land in HTML ids and fetch URLs, so keep them to safe shapes.
+const ID_RE = /^[a-z0-9-]+$/;
+const NAME_RE = /^[a-z0-9_]+$/;
+
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 async function fetchText(url) {
@@ -46,6 +50,9 @@ async function main() {
 
   const symbols = [];
   for (const [id, { name, fill }] of Object.entries(cfg.icons)) {
+    if (!ID_RE.test(id)) throw new Error(`invalid icon id "${id}" (must match ${ID_RE})`);
+    if (!NAME_RE.test(name)) throw new Error(`invalid name "${name}" for icon "${id}" (must match ${NAME_RE})`);
+
     const file = fill ? `${name}-fill.svg` : `${name}.svg`;
     const svg = await fetchText(`${base}/${file}`);
 
