@@ -212,7 +212,8 @@ showMoreButton.addEventListener("click", () => {
 });
 
 hideMusicButton.addEventListener("click", () => {
-    showMoreButton.click();
+    musicList.classList.remove("show");
+    showMoreButton.setAttribute("aria-expanded", "false");
 });
 
 // Build the <li> for the playlist (tomorrow's song preview)
@@ -302,5 +303,6 @@ document.addEventListener('keydown', (e) => {
     const target = e.target.closest('[role="button"]');
     if (!target) return;
     e.preventDefault();
-    target.click();
+    // dispatchEvent (not .click(): SVG elements don't implement HTMLElement.click)
+    target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
 });
