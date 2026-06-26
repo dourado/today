@@ -59,32 +59,27 @@ function renderDeployMessage(el, answer, quote) {
 // Fetch the day's deploy status and update the message + UI colors
 function fetchDeployStatus() {
     const messageElement = document.getElementById('message');
+    const imgArea = document.querySelector('.img-area');
+    const textArea = document.querySelector('.text-area');
+
+    // Paint the page + card with the deploy state's color and a readable text color
+    const paint = (bg, textColor) => {
+        imgArea.style.backgroundColor = bg;
+        document.body.style.backgroundColor = bg;
+        textArea.style.color = textColor;
+    };
 
     fetch('https://shouldideploy.today/api?tz=America/Sao_Paulo')
         .then(response => response.json())
         .then(data => {
-            const shouldDeploy = data.shouldideploy ? 'YES' : 'NO';
-            const message = data.message;
-            renderDeployMessage(messageElement, shouldDeploy, message);
-
-            // Change background color based on shouldideploy value
-            if (data.shouldideploy) {
-                document.querySelector('.img-area').style.backgroundColor = '#50fa7b'; // Dracula green (YES)
-                document.querySelector('.text-area').style.color = '#282a36'; // Dracula bg — dark text on green
-                document.querySelector('body').style.backgroundColor = '#50fa7b';
-            } else {
-                document.querySelector('.img-area').style.backgroundColor = '#ff5555'; // Dracula red (NO)
-                document.querySelector('.text-area').style.color = '#f8f8f2'; // light text on red
-                document.querySelector('body').style.backgroundColor = '#ff5555';
-            }
+            renderDeployMessage(messageElement, data.shouldideploy ? 'YES' : 'NO', data.message);
+            // Dracula green (YES) / red (NO), with a readable text color
+            paint(data.shouldideploy ? '#50fa7b' : '#ff5555', data.shouldideploy ? '#282a36' : '#f8f8f2');
         })
         .catch(() => {
-            // Network failure / API down: show a visible, neutral fallback (the
-            // message would otherwise be white text on no background)
+            // Network failure / API down: visible, neutral fallback
             renderDeployMessage(messageElement, '?', "Couldn't check right now.");
-            document.querySelector('.img-area').style.backgroundColor = '#6272a4'; // Dracula comment (neutral)
-            document.querySelector('.text-area').style.color = '#f8f8f2';
-            document.querySelector('body').style.backgroundColor = '#6272a4';
+            paint('#6272a4', '#f8f8f2'); // Dracula comment (neutral)
         });
 }
 
