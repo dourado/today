@@ -27,6 +27,15 @@
     user-select: none;
 }
 
+/* The inline <symbol> sprite: present in the DOM but never painted. A class
+   (not a style attribute) keeps style-src free of 'unsafe-inline'. */
+.icon-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
 :root {
     /* Alucard (Dracula light) */
     --main-color: #A3144D;      /* pink accent */
