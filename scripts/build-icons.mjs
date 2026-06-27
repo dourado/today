@@ -6,10 +6,11 @@
 // 1 = filled). To swap an icon, change its "name"/"fill" here and regenerate —
 // the id stays, so the HTML never needs editing.
 //
-// The drawings are fetched from the Material Symbols package on jsDelivr
-// (latest, unless icons.config.json pins a version in "package"; the weekly
-// workflow refreshes them and opens a PR on drift) and inlined as <symbol>s;
-// the deployed site ships zero icon requests.
+// The drawings are fetched from the pinned Material Symbols version on jsDelivr
+// ("package" + "version" in icons.config.json) and inlined as <symbol>s; the
+// deployed site ships zero icon requests. The weekly Icons workflow bumps the
+// pin and opens a PR only when a new release actually changes one of these
+// drawings.
 //
 // Usage: node scripts/build-icons.mjs
 
@@ -23,6 +24,7 @@ const END = "<!-- icons:end -->";
 // Config values land in HTML ids and fetch URLs, so keep them to safe shapes.
 const ID_RE = /^[a-z0-9-]+$/;
 const NAME_RE = /^[a-z0-9_]+$/;
+const VERSION_RE = /^\d+\.\d+\.\d+$/;
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -46,7 +48,10 @@ async function fetchText(url) {
 
 async function main() {
   const cfg = JSON.parse(await readFile(CONFIG, "utf8"));
-  const base = `https://cdn.jsdelivr.net/npm/${cfg.package}/${cfg.style}`;
+  if (!VERSION_RE.test(cfg.version ?? "")) {
+    throw new Error(`invalid version "${cfg.version}" in ${CONFIG} (must match ${VERSION_RE})`);
+  }
+  const base = `https://cdn.jsdelivr.net/npm/${cfg.package}@${cfg.version}/${cfg.style}`;
 
   const symbols = [];
   for (const [id, { name, fill }] of Object.entries(cfg.icons)) {

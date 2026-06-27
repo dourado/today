@@ -1,5 +1,6 @@
 {
   "package": "@material-symbols/svg-400",
+  "version": "0.45.4",
   "style": "rounded",
   "icons": {
     "dropdown": { "name": "arrow_drop_down", "fill": 0 },
