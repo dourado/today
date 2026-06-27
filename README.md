@@ -21,8 +21,12 @@ Visit the live site at [Golden Today](https://shouldideploytodaygolden.vercel.ap
 ```plaintext
 today/
 ├── .github/
+│   ├── workflows/
+│   │   └── icons.yml       # regenerates the icon sprite and opens a PR
 │   ├── CODEOWNERS
 │   └── dependabot.yml
+├── scripts/
+│   └── build-icons.mjs     # Material Symbols → inline SVG sprite
 ├── src/
 │   ├── audio/              # one track per weekday (sunday.mp3 … saturday.mp3)
 │   ├── img/
@@ -34,6 +38,7 @@ today/
 │   │   └── site.webmanifest
 │   ├── index.html
 │   └── styles.css
+├── icons.config.json       # icon ids → Material Symbols name + fill axis
 ├── LICENSE
 ├── README.md
 └── SECURITY.md
@@ -59,4 +64,5 @@ Do What The F*ck You Want To Public License — see [LICENSE](LICENSE).
 <small style="font-size: 12px;">References:</small><br>
 <small style="font-size: 12px;">The design of this project was enhanced from the projects:</small><br>
 <small style="font-size: 12px;">&bull;</small> <a target="_blank" href="https://github.com/baires/shouldideploy" style="font-size: 12px;">Should I Deploy?</a><br>
-<small style="font-size: 12px;">&bull;</small> <a target="_blank" href="https://github.com/PedroCantanhede/music-player" style="font-size: 12px;">Music Player</a>
+<small style="font-size: 12px;">&bull;</small> <a target="_blank" href="https://github.com/PedroCantanhede/music-player" style="font-size: 12px;">Music Player</a><br>
+<small style="font-size: 12px;">Icons: <a target="_blank" href="https://fonts.google.com/icons" style="font-size: 12px;">Material Symbols</a> (Apache-2.0), inlined as an SVG sprite.</small>

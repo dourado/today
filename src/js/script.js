@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
 
 // Loads the current song
 function loadMusic(indexNumb) {
-    musicName.innerText = allMusic[indexNumb].name;
+    musicName.innerText = `${allMusic[indexNumb].name}'s Song`;
     musicArtist.innerText = allMusic[indexNumb].artist;
     mainAudio.src = allMusic[indexNumb].src;
 }
@@ -85,8 +85,7 @@ function fetchDeployStatus() {
 
 // Play
 function playMusic() {
-    wrapper.classList.add("paused");
-    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>pause_circle</i>";
+    wrapper.classList.add("playing");
     playPauseButton.setAttribute("aria-pressed", "true");
     // play() may not return a promise on very old browsers — guard before .catch
     const playback = mainAudio.play();
@@ -101,8 +100,7 @@ function playMusic() {
 
 // Pause
 function pauseMusic() {
-    wrapper.classList.remove("paused");
-    playPauseButton.innerHTML = "<i class='material-symbols-rounded'>play_circle</i>";
+    wrapper.classList.remove("playing");
     playPauseButton.setAttribute("aria-pressed", "false");
     mainAudio.pause();
 }
@@ -126,9 +124,9 @@ nextButton.addEventListener("click", replayCurrentMusic);
 
 // Play / Pause button
 playPauseButton.addEventListener("click", () => {
-    // The "paused" class is present while the song is playing (added in
-    // playMusic, removed in pauseMusic), so it reflects the playing state.
-    const isPlaying = wrapper.classList.contains("paused");
+    // The "playing" class is added in playMusic and removed in pauseMusic,
+    // so it reflects the current playing state.
+    const isPlaying = wrapper.classList.contains("playing");
 
     // If it's playing, pause it; otherwise play.
     isPlaying ? pauseMusic() : playMusic();
@@ -156,8 +154,8 @@ mainAudio.addEventListener("timeupdate", (e) => {
     currentTimeEl.innerText = `${currentMinutes}:${currentSeconds}`;
 });
 
-// Update the total duration once the song data loads (registered ONCE)
-mainAudio.addEventListener("loadeddata", () => {
+// Update the total duration once the song metadata loads (registered ONCE)
+mainAudio.addEventListener("loadedmetadata", () => {
     let musicDuration = wrapper.querySelector(".duration");
     let audioDuration = mainAudio.duration;
     let totalMinutes = Math.floor(audioDuration / 60); // Convert to minutes
@@ -200,22 +198,34 @@ const repeatButton = wrapper.querySelector("#repeat-plist");
 function setLoopState(loopOn) {
     mainAudio.loop = loopOn;
     repeatButton.setAttribute("aria-pressed", loopOn);
-    repeatButton.setAttribute("title", loopOn ? "Song Looped" : "No Loop");
+    // SVG ignores the `title` attribute for tooltips — update the <title> child.
+    repeatButton.querySelector("title").textContent = loopOn ? "Song Looped" : "No Loop";
 }
 
 repeatButton.addEventListener("click", () => {
     setLoopState(!mainAudio.loop);
 });
 
-// Show / hide the playlist
+// Show / hide the playlist — close is shared by the toggle and the X button so
+// the open-state class and aria stay in one place.
+function closePlaylist() {
+    musicList.classList.remove("show");
+    showMoreButton.setAttribute("aria-expanded", "false");
+    // The list (and its close button) becomes visibility:hidden, so move focus
+    // back to the control that opens it instead of leaving it on a hidden element.
+    showMoreButton.focus();
+}
+
+function openPlaylist() {
+    musicList.classList.add("show");
+    showMoreButton.setAttribute("aria-expanded", "true");
+}
+
 showMoreButton.addEventListener("click", () => {
-    const isOpen = musicList.classList.toggle("show");
-    showMoreButton.setAttribute("aria-expanded", isOpen);
+    musicList.classList.contains("show") ? closePlaylist() : openPlaylist();
 });
 
-hideMusicButton.addEventListener("click", () => {
-    showMoreButton.click();
-});
+hideMusicButton.addEventListener("click", closePlaylist);
 
 // Build the <li> for the playlist (tomorrow's song preview)
 let nextMusicTomorrow;
@@ -230,7 +240,7 @@ let liTag = `<li data-src="${allMusic[nextMusicTomorrow].src}">
                     <span>${allMusic[nextMusicTomorrow].name}'s Song</span>
                     <p>${allMusic[nextMusicTomorrow].artist}</p>
                 </div>
-                <audio src="${allMusic[nextMusicTomorrow].src}"></audio>
+                <audio src="${allMusic[nextMusicTomorrow].src}" preload="metadata"></audio>
                 <span class="audio-duration">--:--</span>
             </li>`;
 ulTag.insertAdjacentHTML("beforeend", liTag);
@@ -238,7 +248,7 @@ ulTag.insertAdjacentHTML("beforeend", liTag);
 let liAudioTag = ulTag.querySelector(`li[data-src="${allMusic[nextMusicTomorrow].src}"] audio`);
 let liAudioDuration = ulTag.querySelector(`li[data-src="${allMusic[nextMusicTomorrow].src}"] .audio-duration`);
 
-liAudioTag.addEventListener("loadeddata", () => {
+liAudioTag.addEventListener("loadedmetadata", () => {
     let audioDuration = liAudioTag.duration;
     let totalMinutes = Math.floor(audioDuration / 60);
     let totalSeconds = Math.floor(audioDuration % 60);
@@ -251,10 +261,15 @@ liAudioTag.addEventListener("loadeddata", () => {
 // The list item previews tomorrow's song, but — since it's one song per
 // day — activating it just restarts the day's song, like the next/prev buttons.
 const tomorrowLi = ulTag.querySelector("li");
-tomorrowLi.setAttribute("role", "button");
-tomorrowLi.setAttribute("tabindex", "0");
-tomorrowLi.setAttribute("aria-label", `${allMusic[nextMusicTomorrow].name}'s Song — play today's song`);
-tomorrowLi.addEventListener("click", replayCurrentMusic);
+// An <li> isn't natively interactive (no built-in focus/keyboard behavior), so
+// the action is a real <button> overlaid on the row — the whole item stays
+// clickable with no visual change.
+const tomorrowPlay = document.createElement("button");
+tomorrowPlay.type = "button";
+tomorrowPlay.className = "li-play";
+tomorrowPlay.setAttribute("aria-label", `${allMusic[nextMusicTomorrow].name}'s Song — play today's song`);
+tomorrowPlay.addEventListener("click", replayCurrentMusic);
+tomorrowLi.append(tomorrowPlay);
 
 // Dark Mode
 const darkMode = document.querySelector('.dark-mode'),
@@ -300,5 +315,6 @@ document.addEventListener('keydown', (e) => {
     const target = e.target.closest('[role="button"]');
     if (!target) return;
     e.preventDefault();
-    target.click();
+    // dispatchEvent (not .click(): SVG elements don't implement HTMLElement.click)
+    target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
 });

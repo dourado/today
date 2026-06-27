@@ -12,6 +12,30 @@
     margin: 0;
 }
 
+/* Inline SVG icons (Material Symbols Rounded). The drawings live in a <symbol>
+   sprite generated into index.html by scripts/build-icons.mjs; each icon is a
+   <svg><use href="#ic-…"></svg>. Sized in em so the existing font-size rules
+   keep controlling each icon, and colored via currentColor. */
+.material-symbols-rounded {
+    font-size: 24px;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+/* The inline <symbol> sprite: present in the DOM but never painted. A class
+   (not a style attribute) keeps style-src free of 'unsafe-inline'. */
+.icon-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
 :root {
     /* Alucard (Dracula light) */
     --main-color: #A3144D;      /* pink accent */
@@ -57,7 +81,7 @@ body {
     justify-content: space-between;
 }
 
-.top-bar i {
+.top-bar svg {
     font-size: 2.3rem;
     color: var(--light-black);
 }
@@ -197,14 +221,14 @@ body {
     margin: 40px 0 5px 0;
 }
 
-.controls i {
+.controls > svg {
     font-size: 30px;
     user-select: none;
     color: var(--control-color);
 }
 
-.controls i:nth-child(2),
-.controls i:nth-child(4) {
+.controls > svg:nth-child(2),
+.controls > svg:nth-child(4) {
     font-size: 43px;
 }
 
@@ -214,13 +238,6 @@ body {
 
 .controls #next {
     margin-left: -13px;
-}
-
-/* Filled (solid) glyphs for the skip and play/pause icons */
-#prev,
-#next,
-.play-pause i {
-    font-variation-settings: 'FILL' 1;
 }
 
 /* Loop toggle: accent color while active (looping), muted when off */
@@ -235,9 +252,23 @@ body {
 }
 
 /* Single play_circle / pause_circle glyph — the circle is the button */
-.play-pause i {
+.play-pause svg {
     font-size: 73px;
     color: var(--control-color);
+}
+
+/* Play / pause crossfade — show one glyph at a time based on the playing state
+   (the `playing` class is present on .wrapper while a song plays). */
+.play-pause .icon-pause {
+    display: none;
+}
+
+.wrapper.playing .play-pause .icon-play {
+    display: none;
+}
+
+.wrapper.playing .play-pause .icon-pause {
+    display: inline-block;
 }
 
 /* Music List */
@@ -271,7 +302,7 @@ body {
     color: var(--light-black);
 }
 
-.header .row i {
+.header .row svg {
     cursor: default;
 }
 
@@ -301,6 +332,28 @@ body {
     color: var(--light-black);
     border-bottom: 1px solid var(--dark-white);
     cursor: pointer;
+    position: relative;
+}
+
+/* Transparent <button> overlay that makes the whole row activatable and
+   keyboard-focusable without changing how the row looks. */
+.li-play {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.li-play:focus-visible {
+    outline: 2px solid var(--control-color);
+    outline-offset: 3px;
+    border-radius: 4px;
 }
 
 .music-list ul li:last-child {
@@ -330,12 +383,11 @@ ul li .audio-duration {
     transition: .5s;
 }
 
-.dark-mode i {
+.dark-mode svg {
     position: absolute;
     top: 50%;
     left: 50%;
     font-size: 1.3rem;
-    font-variation-settings: 'FILL' 1;
     transform: translate(-50%, -50%);
     transition: .5s;
 }
@@ -373,9 +425,9 @@ ul li .audio-duration {
     visibility: visible;
 }
 
-/* Timer stays muted in dark */
-.is-dark .progress-area span {
-    color: var(--muted);
+/* Timer muted in dark, but lightened to meet WCAG AA (4.5:1) on the surface */
+.is-dark .timer span {
+    color: #8b95c4;
 }
 
 /* Full screen on viewports up to 1024px (mobile and tablets) */
