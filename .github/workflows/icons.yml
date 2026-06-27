@@ -42,10 +42,11 @@ jobs:
         if: github.event_name == 'push'
         run: |
           node scripts/build-icons.mjs
+          version=$(node -p "require('./icons.config.json').version")
           {
             echo "## Icon sprite regenerated"
             echo
-            echo "Rebuilt the inline SVG sprite in \`src/index.html\` from the pinned Material Symbols version (\`$(node -p "require('./icons.config.json').version")\`)."
+            echo "Rebuilt the inline SVG sprite in \`src/index.html\` from the pinned Material Symbols version (\`$version\`)."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit sprite to the branch
