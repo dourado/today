@@ -37,7 +37,8 @@ today/
 │   │   ├── script.js       # player, dark mode, accessibility
 │   │   └── site.webmanifest
 │   ├── index.html
-│   └── styles.css
+│   ├── styles.css
+│   └── vercel.json         # CSP + HTTP security headers (see SECURITY.md)
 ├── icons.config.json       # icon ids → Material Symbols name + fill axis
 ├── LICENSE
 ├── README.md
@@ -50,6 +51,7 @@ today/
   - `js/music-list.js`: The JavaScript file that contains the daily audio file paths.
   - `index.html`: The main HTML file.
   - `styles.css`: The CSS file that styles the web app and defines the dark mode styles.
+  - `vercel.json`: HTTP security headers (CSP, HSTS, `X-Frame-Options`, …) applied on deploy.
 
 ## License
 
