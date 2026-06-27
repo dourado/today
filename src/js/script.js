@@ -205,16 +205,23 @@ repeatButton.addEventListener("click", () => {
     setLoopState(!mainAudio.loop);
 });
 
-// Show / hide the playlist
-showMoreButton.addEventListener("click", () => {
-    const isOpen = musicList.classList.toggle("show");
-    showMoreButton.setAttribute("aria-expanded", isOpen);
-});
-
-hideMusicButton.addEventListener("click", () => {
+// Show / hide the playlist — close is shared by the toggle and the X button so
+// the open-state class and aria stay in one place.
+function closePlaylist() {
     musicList.classList.remove("show");
     showMoreButton.setAttribute("aria-expanded", "false");
+}
+
+function openPlaylist() {
+    musicList.classList.add("show");
+    showMoreButton.setAttribute("aria-expanded", "true");
+}
+
+showMoreButton.addEventListener("click", () => {
+    musicList.classList.contains("show") ? closePlaylist() : openPlaylist();
 });
+
+hideMusicButton.addEventListener("click", closePlaylist);
 
 // Build the <li> for the playlist (tomorrow's song preview)
 let nextMusicTomorrow;
