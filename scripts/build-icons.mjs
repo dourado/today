@@ -85,7 +85,9 @@ async function main() {
   if (!re.test(html)) {
     throw new Error(`markers ${START} … ${END} not found in ${HTML}`);
   }
-  html = html.replace(re, block);
+  // Replacer as a function so `$` sequences in the fetched SVG markup are
+  // inserted literally, not treated as replacement patterns (e.g. `$&`, `$1`).
+  html = html.replace(re, () => block);
   await writeFile(HTML, html);
 
   console.log(`\nWrote ${symbols.length} symbols into ${HTML}.`);
