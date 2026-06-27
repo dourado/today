@@ -198,7 +198,8 @@ const repeatButton = wrapper.querySelector("#repeat-plist");
 function setLoopState(loopOn) {
     mainAudio.loop = loopOn;
     repeatButton.setAttribute("aria-pressed", loopOn);
-    repeatButton.setAttribute("title", loopOn ? "Song Looped" : "No Loop");
+    // SVG ignores the `title` attribute for tooltips — update the <title> child.
+    repeatButton.querySelector("title").textContent = loopOn ? "Song Looped" : "No Loop";
 }
 
 repeatButton.addEventListener("click", () => {
