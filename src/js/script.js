@@ -210,6 +210,9 @@ repeatButton.addEventListener("click", () => {
 function closePlaylist() {
     musicList.classList.remove("show");
     showMoreButton.setAttribute("aria-expanded", "false");
+    // The list (and its close button) becomes visibility:hidden, so move focus
+    // back to the control that opens it instead of leaving it on a hidden element.
+    showMoreButton.focus();
 }
 
 function openPlaylist() {
