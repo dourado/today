@@ -3,6 +3,18 @@
 **Today** is a small personal, static web project. There is no formal release
 versioning — security fixes are applied to the latest state of the `main` branch.
 
+## Hardening
+
+The production deploy ships a strict set of HTTP security headers, configured in
+`src/vercel.json`:
+
+- **Content-Security-Policy** — no `'unsafe-inline'` for scripts (the inline
+  analytics snippets are allow-listed by hash); script/style/font/connect/img
+  sources are restricted to the origins actually used.
+- **Strict-Transport-Security** (HSTS), **X-Content-Type-Options**,
+  **X-Frame-Options**, **Referrer-Policy**, **Cross-Origin-Opener-Policy**, and
+  **Permissions-Policy**.
+
 ## Reporting a Vulnerability
 
 If you discover a security issue, please report it privately through GitHub's
