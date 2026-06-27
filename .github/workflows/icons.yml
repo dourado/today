@@ -40,7 +40,14 @@ jobs:
       # sprite back to the branch.
       - name: Regenerate sprite
         if: github.event_name == 'push'
-        run: node scripts/build-icons.mjs
+        run: |
+          node scripts/build-icons.mjs
+          version=$(node -p "require('./icons.config.json').version")
+          {
+            echo "## Icon sprite regenerated"
+            echo
+            echo "Rebuilt the inline SVG sprite in \`src/index.html\` from the pinned Material Symbols version (\`$version\`)."
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit sprite to the branch
         if: github.event_name == 'push'
@@ -61,16 +68,25 @@ jobs:
           pkg=$(jq -r '.package' icons.config.json)
           latest=$(curl -fsSL "https://registry.npmjs.org/$pkg" | jq -r '."dist-tags".latest')
           echo "pinned=$pinned latest=$latest"
+          {
+            echo "## Material Symbols sync"
+            echo
+            echo "- Package: \`$pkg\`"
+            echo "- Pinned: \`$pinned\`"
+            echo "- Latest on npm: \`$latest\`"
+          } >> "$GITHUB_STEP_SUMMARY"
           # Skip cleanly on anything that isn't a plain x.y.z release (a missing
           # dist-tag yields "null"; pre-releases like 0.46.0-rc.1 would break the
           # pinned build), rather than writing it into the config and failing.
           if ! printf '%s' "$latest" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
             echo "Registry returned an unexpected latest ('$latest'); leaving the pin at v$pinned."
+            echo "- Result: ⚠️ registry returned an unexpected \`latest\`; pin left at \`$pinned\`." >> "$GITHUB_STEP_SUMMARY"
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           if [ "$latest" = "$pinned" ]; then
             echo "Already on the latest version."
+            echo "- Result: ✅ already on the latest release; nothing to do." >> "$GITHUB_STEP_SUMMARY"
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -80,9 +96,11 @@ jobs:
           if git diff --quiet -- src/index.html; then
             echo "v$latest doesn't change our icons; leaving the pin at v$pinned."
             git checkout -- icons.config.json
+            echo "- Result: ✅ \`$latest\` doesn't change our icons; pin stays at \`$pinned\`." >> "$GITHUB_STEP_SUMMARY"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "v$latest changes the sprite; bumping the pin."
+            echo "- Result: 🔄 \`$latest\` changes the sprite; bumping the pin and opening a PR." >> "$GITHUB_STEP_SUMMARY"
             echo "version=$latest" >> "$GITHUB_OUTPUT"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
