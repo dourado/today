@@ -61,6 +61,14 @@ jobs:
           pkg=$(jq -r '.package' icons.config.json)
           latest=$(curl -fsSL "https://registry.npmjs.org/$pkg" | jq -r '."dist-tags".latest')
           echo "pinned=$pinned latest=$latest"
+          # Skip cleanly on anything that isn't a plain x.y.z release (a missing
+          # dist-tag yields "null"; pre-releases like 0.46.0-rc.1 would break the
+          # pinned build), rather than writing it into the config and failing.
+          if ! printf '%s' "$latest" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Registry returned an unexpected latest ('$latest'); leaving the pin at v$pinned."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           if [ "$latest" = "$pinned" ]; then
             echo "Already on the latest version."
             echo "changed=false" >> "$GITHUB_OUTPUT"
