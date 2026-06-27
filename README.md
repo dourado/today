@@ -38,7 +38,7 @@ today/
 │   │   └── site.webmanifest
 │   ├── index.html
 │   ├── styles.css
-│   └── vercel.json         # CSP + security headers (HSTS, XFO, COOP, …)
+│   └── vercel.json         # CSP + HTTP security headers (see SECURITY.md)
 ├── icons.config.json       # icon ids → Material Symbols name + fill axis
 ├── LICENSE
 ├── README.md
