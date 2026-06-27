@@ -45,7 +45,7 @@ jobs:
           {
             echo "## Icon sprite regenerated"
             echo
-            echo "Rebuilt the inline SVG sprite in \`src/index.html\` from the pinned Material Symbols version (\`$(jq -r '.version' icons.config.json)\`)."
+            echo "Rebuilt the inline SVG sprite in \`src/index.html\` from the pinned Material Symbols version (\`$(node -p "require('./icons.config.json').version")\`)."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit sprite to the branch
