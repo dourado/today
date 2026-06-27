@@ -58,7 +58,8 @@ jobs:
         run: |
           set -euo pipefail
           pinned=$(jq -r '.version' icons.config.json)
-          latest=$(curl -fsSL https://registry.npmjs.org/@material-symbols/svg-400 | jq -r '."dist-tags".latest')
+          pkg=$(jq -r '.package' icons.config.json)
+          latest=$(curl -fsSL "https://registry.npmjs.org/$pkg" | jq -r '."dist-tags".latest')
           echo "pinned=$pinned latest=$latest"
           if [ "$latest" = "$pinned" ]; then
             echo "Already on the latest version."
