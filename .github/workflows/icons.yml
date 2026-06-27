@@ -96,11 +96,11 @@ jobs:
           if git diff --quiet -- src/index.html; then
             echo "v$latest doesn't change our icons; leaving the pin at v$pinned."
             git checkout -- icons.config.json
-            echo "- Result: ✅ v\`$latest\` doesn't change our icons; pin stays at \`$pinned\`." >> "$GITHUB_STEP_SUMMARY"
+            echo "- Result: ✅ \`$latest\` doesn't change our icons; pin stays at \`$pinned\`." >> "$GITHUB_STEP_SUMMARY"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "v$latest changes the sprite; bumping the pin."
-            echo "- Result: 🔄 v\`$latest\` changes the sprite; bumping the pin and opening a PR." >> "$GITHUB_STEP_SUMMARY"
+            echo "- Result: 🔄 \`$latest\` changes the sprite; bumping the pin and opening a PR." >> "$GITHUB_STEP_SUMMARY"
             echo "version=$latest" >> "$GITHUB_OUTPUT"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
