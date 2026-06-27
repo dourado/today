@@ -59,10 +59,8 @@ today/
 
 Do What The F*ck You Want To Public License — see [LICENSE](LICENSE).
 
-<br>
-
 -----  
-<br>
+
 <small style="font-size: 12px;">References:</small><br>
 <small style="font-size: 12px;">The design of this project was enhanced from the projects:</small><br>
 <small style="font-size: 12px;">&bull;</small> <a target="_blank" href="https://github.com/baires/shouldideploy" style="font-size: 12px;">Should I Deploy?</a><br>
