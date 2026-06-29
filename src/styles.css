@@ -37,6 +37,11 @@
 }
 
 :root {
+    /* The site ships its own light + dark themes, so declare both. This also
+       opts the page out of Chrome's "Auto Dark Mode for Web Contents", which
+       would otherwise force-invert our colors (e.g. white text) on top. */
+    color-scheme: light dark;
+
     /* Alucard (Dracula light) */
     --main-color: #A3144D;      /* pink accent */
     --secondary-color: #644AC9; /* purple accent */
