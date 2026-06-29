@@ -37,6 +37,14 @@
 }
 
 :root {
+    /* Declare support for both themes so Chrome's "Auto Dark Mode for Web
+       Contents" leaves the page alone (otherwise it force-inverts our colors —
+       e.g. white text on the status card). Mirrored by a <meta color-scheme>
+       in <head> for an early, strong signal. Only the dark state pins
+       `color-scheme: dark` (.is-dark); never declare `light` alone, since that
+       re-advertises a light page and re-arms auto-dark. */
+    color-scheme: light dark;
+
     /* Alucard (Dracula light) */
     --main-color: #A3144D;      /* pink accent */
     --secondary-color: #644AC9; /* purple accent */
@@ -404,6 +412,7 @@ ul li .audio-duration {
 }
 
 .is-dark {
+    color-scheme: dark;
     /* Dracula (dark) — override the theme tokens; component styles follow */
     --main-color: #FF79C6;      /* pink accent */
     --secondary-color: #BD93F9; /* purple accent */
