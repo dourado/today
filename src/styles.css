@@ -37,11 +37,12 @@
 }
 
 :root {
-    /* The site ships its own light + dark themes, so declare both here: this
-       opts the page out of Chrome's "Auto Dark Mode for Web Contents", which
-       would otherwise force-invert our colors (e.g. white text) on top. The
-       concrete scheme is then pinned per theme on `body` / `.is-dark` so native
-       UI (scrollbars, controls) tracks the manual toggle, not the OS setting. */
+    /* Declare support for both themes so Chrome's "Auto Dark Mode for Web
+       Contents" leaves the page alone (otherwise it force-inverts our colors —
+       e.g. white text on the status card). Mirrored by a <meta color-scheme>
+       in <head> for an early, strong signal. Only the dark state pins
+       `color-scheme: dark` (.is-dark); never declare `light` alone, since that
+       re-advertises a light page and re-arms auto-dark. */
     color-scheme: light dark;
 
     /* Alucard (Dracula light) */
@@ -56,7 +57,6 @@
 }
 
 body {
-    color-scheme: light;
     display: flex;
     align-items: center;
     justify-content: center;
